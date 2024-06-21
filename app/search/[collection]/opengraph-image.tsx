@@ -1,11 +1,11 @@
 import OpengraphImage from 'components/opengraph-image';
-import { getCollection } from 'lib/services/shopify';
+import api from 'lib/services';
 
 export const runtime = 'edge';
 
 export default async function Image({ params }: { params: { collection: string } }) {
-  const collection = await getCollection(params.collection);
-  const title = collection?.seo?.title || collection?.title;
+  const category = await api.getCategory(params.collection);
+  const title = category?.title;
 
   return await OpengraphImage({ title });
 }

@@ -1,4 +1,4 @@
-import { SimpleSalesService } from './services/simple-sales-service';
+import { SimpleSalesService } from './services/sample-stock-management';
 import { CommerceService } from './utils/commerce-service';
 
 // Create service to fetch data from simple sales API

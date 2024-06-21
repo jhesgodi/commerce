@@ -1,55 +1,35 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fcommerce&project-name=commerce&repo-name=commerce&demo-title=Next.js%20Commerce&demo-url=https%3A%2F%2Fdemo.vercel.store&demo-image=https%3A%2F%2Fbigcommerce-demo-asset-ksvtgfvnd.vercel.app%2Fbigcommerce.png&env=COMPANY_NAME,SHOPIFY_REVALIDATION_SECRET,SHOPIFY_STORE_DOMAIN,SHOPIFY_STOREFRONT_ACCESS_TOKEN,SITE_NAME,TWITTER_CREATOR,TWITTER_SITE)
+# NFTs Shop Commerce Template
 
-# Next.js Commerce
+A ecommerce shop template featuring:
 
-A Next.js 14 and App Router-ready ecommerce template featuring:
+- Immutable Checkout Widgets
+- Immutable Primary sales
 
-- Next.js App Router
-- Optimized for SEO using Next.js's Metadata
-- React Server Components (RSCs) and Suspense
-- Server Actions for mutations
-- Edge Runtime
-- New fetching and caching paradigms
-- Dynamic OG images
-- Styling with Tailwind CSS
-- Checkout and payments with Shopify
-- Automatic light/dark mode based on system settings
-
-<h3 id="v1-note"></h3>
-
-> Note: Looking for Next.js Commerce v1? View the [code](https://github.com/vercel/commerce/tree/v1), [demo](https://commerce-v1.vercel.store), and [release notes](https://github.com/vercel/commerce/releases/tag/v1).
 
 ## Providers
+This template requires a stock management system to manage product inventory and process orders. The `lib` folder contains a base implementation for a sample backend and woocomerce plugin backend.
 
-Vercel will only be actively maintaining a Shopify version [as outlined in our vision and strategy for Next.js Commerce](https://github.com/vercel/commerce/pull/966).
+You can create your own implementation, just follow the structure, keeping the provide `DataService` interface, the rest of the template unchanged.
 
-Vercel is happy to partner and work with any commerce provider to help them get a similar template up and running and listed below. Alternative providers should be able to fork this repository and swap out the `lib/shopify` file with their own implementation while leaving the rest of the template mostly unchanged.
+Otherwise, you are welcome to improve this template and customise it to your needs.
 
-- Shopify (this repository)
-- [BigCommerce](https://github.com/bigcommerce/nextjs-commerce) ([Demo](https://next-commerce-v2.vercel.app/))
-- [Ecwid by Lightspeed](https://github.com/Ecwid/ecwid-nextjs-commerce/) ([Demo](https://ecwid-nextjs-commerce.vercel.app/))
-- [Medusa](https://github.com/medusajs/vercel-commerce) ([Demo](https://medusa-nextjs-commerce.vercel.app/))
-- [Saleor](https://github.com/saleor/nextjs-commerce) ([Demo](https://saleor-commerce.vercel.app/))
-- [Shopware](https://github.com/shopwareLabs/vercel-commerce) ([Demo](https://shopware-vercel-commerce-react.vercel.app/))
-- [Swell](https://github.com/swellstores/verswell-commerce) ([Demo](https://verswell-commerce.vercel.app/))
-- [Umbraco](https://github.com/umbraco/Umbraco.VercelCommerce.Demo) ([Demo](https://vercel-commerce-demo.umbraco.com/))
-- [Wix](https://github.com/wix/nextjs-commerce) ([Demo](https://wix-nextjs-commerce.vercel.app/))
+> Note: If you are looking to learn more please read [Immutable checkout widgets documentation](https://docs.immutable.com/docs/zkevm/products/checkout/).
 
-> Note: Providers, if you are looking to use similar products for your demo, you can [download these assets](https://drive.google.com/file/d/1q_bKerjrwZgHwCw0ovfUMW6He9VtepO_/view?usp=sharing).
+## Foundations
 
-## Integrations
+This project is a fork of Next.js Commerce [Vercel](https://github.com/vercel/nextjs-commerce) ([Demo](https://demo.vercel.store/)).
 
-Integrations enable upgraded or additional functionality for Next.js Commerce
+The NFTs checkout functionality is powered by Immutable's [Primary Sale Widget](https://docs.immutable.com/docs/zkEVM/products/checkout/widgets/primary-sales/widget)
 
-- [Orama](https://github.com/oramasearch/nextjs-commerce) ([Demo](https://vercel-commerce.oramasearch.com/))
-  - Upgrades search to include typeahead with dynamic re-rendering, vector-based similarity search, and JS-based configuration.
-  - Search runs entirely in the browser for smaller catalogs or on a CDN for larger.
+And, the ability to process orders and mint the NFTs is powered by Immutable's [Primary Sales Widget backend](https://docs.immutable.com/docs/zkEVM/products/checkout/widgets/primary-sales/backend) in tandem with a [BYO Stock management system](https://docs.immutable.com/docs/zkEVM/products/checkout/widgets/primary-sales/backend/byo), as showcased within `lib/sample-stock-management` or `lib/woocomerce` if using Immutable's [Woocomerce plugin](https://docs.immutable.com/docs/zkEVM/products/checkout/widgets/primary-sales/backend/woocommerce).
 
 ## Running locally
 
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js Commerce. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables) for this, but a `.env` file is all that is necessary.
+You will need to use the environment variables [defined in `.env.example`](.env.example).
 
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control your Shopify store.
+If deploying to Vercel, dont forget to configure [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables), but overal an `.env` file is all that is necessary.
+
+> Note: DO NOT commit your `.env` file or it will expose secrets that will allow others to control your store.
 
 1. Install Vercel CLI: `npm i -g vercel`
 2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
@@ -60,18 +40,11 @@ pnpm install
 pnpm dev
 ```
 
-Your app should now be running on [localhost:3000](http://localhost:3000/).
+The store should now be running on [localhost:3000](http://localhost:3000/).
 
-<details>
-  <summary>Expand if you work at Vercel and want to run locally and / or contribute</summary>
+## BYO Stock Management system
+We understand building a full fledge backend to run the sales can be a big endavour. Here are 2 boilerplates that can help you
+test or start your sales faster.
 
-1. Run `vc link`.
-1. Select the `Vercel Solutions` scope.
-1. Connect to the existing `commerce-shopify` project.
-1. Run `vc env pull` to get environment variables.
-1. Run `pnpm dev` to ensure everything is working correctly.
-</details>
-
-## Vercel, Next.js Commerce, and Shopify Integration Guide
-
-You can use this comprehensive [integration guide](https://vercel.com/docs/integrations/ecommerce/shopify) with step-by-step instructions on how to configure Shopify as a headless CMS using Next.js Commerce as your headless Shopify storefront on Vercel.
+- [Woocomerce Plugin](https://docs.immutable.com/docs/zkEVM/products/checkout/widgets/primary-sales/backend/woocommerce)
+- [Sample Stock Management API](https://github.com/immutable/commerce-primary-sales-sample-api/tree/main)

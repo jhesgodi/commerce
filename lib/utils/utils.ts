@@ -9,7 +9,7 @@ export const createUrl = (pathname: string, params: URLSearchParams | ReadonlyUR
 
 export const validateEnvironmentVariables = () => {
   const requiredEnvironmentVariables = [
-    //
+    // FIXME:
     'SHOPIFY_STORE_DOMAIN',
     'SHOPIFY_STOREFRONT_ACCESS_TOKEN'
   ];

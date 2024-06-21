@@ -93,6 +93,7 @@ export class SimpleSalesService extends DataService {
 
   async getProducts(params: GetProductsParams): Promise<Product[]> {
     // Implementation here
+
     throw new Error('Method not implemented.');
   }
 }

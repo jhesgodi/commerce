@@ -1,4 +1,4 @@
-import { getCollection, getCollectionProducts } from 'lib/services/shopify';
+import api from 'lib/services';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -11,14 +11,13 @@ export async function generateMetadata({
 }: {
   params: { collection: string };
 }): Promise<Metadata> {
-  const collection = await getCollection(params.collection);
+  const category = await api.getCategory(params.collection);
 
-  if (!collection) return notFound();
+  if (!category) return notFound();
 
   return {
-    title: collection.seo?.title || collection.title,
-    description:
-      collection.seo?.description || collection.description || `${collection.title} products`
+    title: category.title,
+    description: category.description || `${category.title} products`
   };
 }
 
@@ -31,7 +30,11 @@ export default async function CategoryPage({
 }) {
   const { sort } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
-  const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse });
+  const products = await api.getProductsByCategory({
+    categoryId: params.collection,
+    sortKey,
+    reverse
+  });
 
   return (
     <section>

@@ -109,9 +109,15 @@ export type Page = {
 
 export type GetProductsByCategoryParams = {
   categoryId: string;
+  sortKey?: string;
+  reverse?: boolean;
   // Define the properties of the parameters needed to get products by category
 };
 
 export type GetProductsParams = {
+  first?: number;
+  sortKey?: string;
+  reverse?: boolean;
+  searchValue?: string;
   // Define the properties of the parameters needed to get products
 };

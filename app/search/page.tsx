@@ -1,6 +1,6 @@
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
-import { getProducts } from 'lib/services/shopify';
+import api from 'lib/services';
 import { defaultSort, sorting } from 'lib/utils/constants';
 
 export const metadata = {
@@ -16,7 +16,7 @@ export default async function SearchPage({
   const { sort, q: searchValue } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const products = await getProducts({ sortKey, reverse, query: searchValue });
+  const products = await api.getProducts({ sortKey, reverse, searchValue });
   const resultsText = products.length > 1 ? 'results' : 'result';
 
   return (
