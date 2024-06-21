@@ -1,37 +1,37 @@
 'use server';
 
-import { TAGS } from 'lib/constants';
-import { addToCart, createCart, getCart, removeFromCart, updateCart } from 'lib/services/shopify';
+import api from 'lib/services';
+import { TAGS } from 'lib/utils/constants';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-export async function addItem(prevState: any, selectedVariantId: string | undefined) {
+export async function addItem(prevState: any, id: string | undefined) {
   let cartId = cookies().get('cartId')?.value;
   let cart;
 
   if (cartId) {
-    cart = await getCart(cartId);
+    cart = await api.getCart(cartId);
   }
 
   if (!cartId || !cart) {
-    cart = await createCart();
+    cart = await api.createCart();
     cartId = cart.id;
     cookies().set('cartId', cartId);
   }
 
-  if (!selectedVariantId) {
+  if (!id) {
     return 'Missing product variant ID';
   }
 
   try {
-    await addToCart(cartId, [{ merchandiseId: selectedVariantId, quantity: 1 }]);
+    await api.addToCart(cartId, [{ id, quantity: 1 }]);
     revalidateTag(TAGS.cart);
   } catch (e) {
     return 'Error adding item to cart';
   }
 }
 
-export async function removeItem(prevState: any, lineId: string) {
+export async function removeItem(prevState: any, id: string) {
   const cartId = cookies().get('cartId')?.value;
 
   if (!cartId) {
@@ -39,7 +39,7 @@ export async function removeItem(prevState: any, lineId: string) {
   }
 
   try {
-    await removeFromCart(cartId, [lineId]);
+    await api.removeFromCart(cartId, [id]);
     revalidateTag(TAGS.cart);
   } catch (e) {
     return 'Error removing item from cart';
@@ -49,7 +49,7 @@ export async function removeItem(prevState: any, lineId: string) {
 export async function updateItemQuantity(
   prevState: any,
   payload: {
-    lineId: string;
+    id: string;
     variantId: string;
     quantity: number;
   }
@@ -60,19 +60,19 @@ export async function updateItemQuantity(
     return 'Missing cart ID';
   }
 
-  const { lineId, variantId, quantity } = payload;
+  const { id, variantId, quantity } = payload;
 
   try {
     if (quantity === 0) {
-      await removeFromCart(cartId, [lineId]);
+      await api.removeFromCart(cartId, [id]);
       revalidateTag(TAGS.cart);
       return;
     }
 
-    await updateCart(cartId, [
+    await api.updateCart(cartId, [
       {
-        id: lineId,
-        merchandiseId: variantId,
+        id,
+        variantId,
         quantity
       }
     ]);

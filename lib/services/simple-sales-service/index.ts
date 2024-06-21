@@ -1,6 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { DataService } from 'lib/commerce-service';
-import HttpService, { HttpServiceOptions } from 'lib/http-service';
 import {
   Cart,
   Category,
@@ -11,6 +9,8 @@ import {
   Page,
   Product
 } from 'lib/types';
+import { DataService } from 'lib/utils/data-service';
+import HttpService, { HttpServiceOptions } from 'lib/utils/http-service';
 
 export class SimpleSalesService extends DataService {
   private httpService!: HttpService;

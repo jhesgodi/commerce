@@ -3,9 +3,9 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import Price from 'components/price';
-import { DEFAULT_OPTION } from 'lib/constants';
 import type { Cart } from 'lib/services/shopify/types';
 import { createUrl } from 'lib/utils';
+import { DEFAULT_OPTION } from 'lib/utils/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useEffect, useRef, useState } from 'react';

@@ -9,7 +9,8 @@ export type Product = {
 export type LineItem = {
   id: string;
   quantity: number;
-  price: Price;
+  price?: Price;
+  variantId?: string;
 };
 
 export type Order = {
@@ -30,6 +31,7 @@ export type Price = {
 };
 
 export type Cart = {
+  id: string;
   // Define the properties of Cart
 };
 

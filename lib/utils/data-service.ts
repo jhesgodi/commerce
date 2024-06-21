@@ -4,6 +4,7 @@ import {
   Category,
   GetProductsByCategoryParams,
   GetProductsParams,
+  LineItem,
   Menu,
   Page,
   Product
@@ -12,11 +13,11 @@ import {
 export abstract class DataService {
   abstract createCart(): Promise<Cart>;
 
-  abstract addToCart(cartId: string, lineItems: any): Promise<Cart>;
+  abstract addToCart(cartId: string, lineItems: LineItem[]): Promise<Cart>;
 
   abstract removeFromCart(cartId: string, lineIds: string[]): Promise<Cart>;
 
-  abstract updateCart(cartId: string, lineItems: any): Promise<Cart>;
+  abstract updateCart(cartId: string, lineItems: LineItem[]): Promise<Cart>;
 
   abstract getCart(cartId: string): Promise<Cart | undefined>;
 
