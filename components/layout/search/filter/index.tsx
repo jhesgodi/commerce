@@ -3,8 +3,8 @@ import { Suspense } from 'react';
 import FilterItemDropdown from './dropdown';
 import { FilterItem } from './item';
 
-export type ListItem = SortFilterItem | PathFilterItem;
 export type PathFilterItem = { title: string; path: string };
+export type ListItem = SortFilterItem | PathFilterItem;
 
 function FilterItemList({ list }: { list: ListItem[] }) {
   return (
@@ -16,7 +16,11 @@ function FilterItemList({ list }: { list: ListItem[] }) {
   );
 }
 
-export default function FilterList({ list, title }: { list: ListItem[]; title?: string }) {
+type FilterListProps = {
+  list: ListItem[];
+  title?: string;
+};
+export default function FilterList({ list, title }: FilterListProps) {
   return (
     <>
       <nav>

@@ -5,8 +5,8 @@ import { GridTileImage } from 'components/grid/tile';
 import Footer from 'components/layout/footer';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
-import { getProduct, getProductRecommendations } from 'lib/services/shopify';
-import { Image } from 'lib/services/shopify/types';
+import api from 'lib/services';
+import { Image } from 'lib/types';
 import { HIDDEN_PRODUCT_TAG } from 'lib/utils/constants';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -16,16 +16,16 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  const product = await getProduct(params.handle);
+  const product = await api.getProduct(params.handle);
 
   if (!product) return notFound();
 
-  const { url, width, height, altText: alt } = product.featuredImage || {};
-  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG);
+  const { url, width, height, altText: alt } = product.image || {};
+  const indexable = !product.tags?.includes(HIDDEN_PRODUCT_TAG);
 
   return {
-    title: product.seo.title || product.title,
-    description: product.seo.description || product.description,
+    title: product.seo?.title || product.title,
+    description: product?.seo.description || product.description,
     robots: {
       index: indexable,
       follow: indexable,
@@ -36,21 +36,14 @@ export async function generateMetadata({
     },
     openGraph: url
       ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt
-            }
-          ]
+          images: [{ url, alt, width, height }]
         }
       : null
   };
 }
 
 export default async function ProductPage({ params }: { params: { handle: string } }) {
-  const product = await getProduct(params.handle);
+  const product = await api.getProduct(params.handle);
 
   if (!product) return notFound();
 
@@ -59,15 +52,15 @@ export default async function ProductPage({ params }: { params: { handle: string
     '@type': 'Product',
     name: product.title,
     description: product.description,
-    image: product.featuredImage.url,
+    image: product.image.url,
     offers: {
       '@type': 'AggregateOffer',
-      availability: product.availableForSale
+      availability: product.inStock
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
-      priceCurrency: product.priceRange.minVariantPrice.currencyCode,
-      highPrice: product.priceRange.maxVariantPrice.amount,
-      lowPrice: product.priceRange.minVariantPrice.amount
+      priceCurrency: product.price.currency,
+      highPrice: product.price.amount,
+      lowPrice: product.price.amount
     }
   };
 
@@ -108,7 +101,7 @@ export default async function ProductPage({ params }: { params: { handle: string
 }
 
 async function RelatedProducts({ id }: { id: string }) {
-  const relatedProducts = await getProductRecommendations(id);
+  const relatedProducts = await api.getProductRecommendations(id);
 
   if (!relatedProducts.length) return null;
 
@@ -118,18 +111,18 @@ async function RelatedProducts({ id }: { id: string }) {
       <ul className="flex w-full gap-4 overflow-x-auto pt-1">
         {relatedProducts.map((product) => (
           <li
-            key={product.handle}
+            key={product.slug}
             className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
           >
-            <Link className="relative h-full w-full" href={`/product/${product.handle}`}>
+            <Link className="relative h-full w-full" href={`/product/${product.slug}`}>
               <GridTileImage
                 alt={product.title}
                 label={{
                   title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode
+                  amount: product.price.amount,
+                  currencyCode: product.price.currency
                 }}
-                src={product.featuredImage?.url}
+                src={product.image.url}
                 fill
                 sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
               />

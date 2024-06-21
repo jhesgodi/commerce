@@ -1,8 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import { ProductOption, ProductVariant } from 'lib/services/shopify/types';
-import { createUrl } from 'lib/utils';
+import { ProductOption, ProductVariant } from 'lib/types';
+import { createUrl } from 'lib/utils/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type Combination = {
