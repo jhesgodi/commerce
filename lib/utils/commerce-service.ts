@@ -1,14 +1,7 @@
 import { Cart } from '../types';
 import { DataService } from './data-service';
 
-import {
-  Category,
-  GetProductsByCategoryParams,
-  GetProductsParams,
-  Menu,
-  Page,
-  Product
-} from '../types';
+import { Category, GetProductsByCategoryParams, Menu, Page, Product } from '../types';
 
 /** DO NOT CHANGE THIS CLASS
  * Instead implement your own Service extending DataService class
@@ -70,11 +63,7 @@ export class CommerceService extends DataService {
     return this.dataService.getProduct(handle);
   }
 
-  public getProductRecommendations(productId: string): Promise<Product[]> {
-    return this.dataService.getProductRecommendations(productId);
-  }
-
-  public getProducts(params: GetProductsParams): Promise<Product[]> {
-    return this.dataService.getProducts(params);
+  public getSimilarProducts(productId: string): Promise<Product[]> {
+    return this.dataService.getSimilarProducts(productId);
   }
 }

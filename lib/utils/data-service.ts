@@ -3,7 +3,6 @@ import {
   Cart,
   Category,
   GetProductsByCategoryParams,
-  GetProductsParams,
   LineItem,
   Menu,
   Page,
@@ -35,7 +34,5 @@ export abstract class DataService {
 
   abstract getProduct(handle: string): Promise<Product | undefined>;
 
-  abstract getProductRecommendations(productId: string): Promise<Product[]>;
-
-  abstract getProducts(params: GetProductsParams): Promise<Product[]>;
+  abstract getSimilarProducts(productId: string): Promise<Product[]>;
 }

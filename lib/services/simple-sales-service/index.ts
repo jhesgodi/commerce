@@ -86,7 +86,7 @@ export class SimpleSalesService extends DataService {
     throw new Error('Method not implemented.');
   }
 
-  async getProductRecommendations(productId: string): Promise<Product[]> {
+  async getSimilarProducts(productId: string): Promise<Product[]> {
     // Implementation here
     throw new Error('Method not implemented.');
   }

@@ -101,7 +101,7 @@ export default async function ProductPage({ params }: { params: { handle: string
 }
 
 async function RelatedProducts({ id }: { id: string }) {
-  const relatedProducts = await api.getProductRecommendations(id);
+  const relatedProducts = await api.getSimilarProducts(id);
 
   if (!relatedProducts.length) return null;
 
