@@ -1,0 +1,40 @@
+/* eslint-disable no-unused-vars */
+import {
+  Cart,
+  Category,
+  GetProductsByCategoryParams,
+  GetProductsParams,
+  Menu,
+  Page,
+  Product
+} from '../types';
+
+export abstract class DataService {
+  abstract createCart(): Promise<Cart>;
+
+  abstract addToCart(cartId: string, lineItems: any): Promise<Cart>;
+
+  abstract removeFromCart(cartId: string, lineIds: string[]): Promise<Cart>;
+
+  abstract updateCart(cartId: string, lineItems: any): Promise<Cart>;
+
+  abstract getCart(cartId: string): Promise<Cart | undefined>;
+
+  abstract getCategory(handle: string): Promise<Category | undefined>;
+
+  abstract getProductsByCategory(params: GetProductsByCategoryParams): Promise<Product[]>;
+
+  abstract getCategories(): Promise<Category[]>;
+
+  abstract getMenu(handle: string): Promise<Menu[]>;
+
+  abstract getPage(handle: string): Promise<Page>;
+
+  abstract getPages(): Promise<Page[]>;
+
+  abstract getProduct(handle: string): Promise<Product | undefined>;
+
+  abstract getProductRecommendations(productId: string): Promise<Product[]>;
+
+  abstract getProducts(params: GetProductsParams): Promise<Product[]>;
+}
