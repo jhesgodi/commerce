@@ -11,6 +11,7 @@ import {
 } from 'lib/types';
 import { DataService } from 'lib/utils/data-service';
 import HttpService, { HttpServiceOptions } from 'lib/utils/http-service';
+import { toCamelCase } from 'lib/utils/utils';
 
 export class SimpleSalesService extends DataService {
   private httpService!: HttpService;
@@ -51,24 +52,61 @@ export class SimpleSalesService extends DataService {
   }
 
   async getCategory(handle: string): Promise<Category | undefined> {
-    // Implementation here
-    this.httpService.get<Category>(`/category/${handle}`);
-    throw new Error('Method not implemented.');
+    const categories = (await import(`./mocks/categories`)).default;
+
+    if (!categories) {
+      throw new Error('Categories not found.');
+    }
+
+    const category = categories.find((category) => category.slug === handle);
+
+    if (!category) {
+      throw new Error(`Category not found. ${handle}`);
+    }
+
+    return category;
   }
 
-  async getProductsByCategory(params: GetProductsByCategoryParams): Promise<Product[]> {
-    // Implementation here
-    throw new Error('Method not implemented.');
+  async getCategoryProducts(params: GetProductsByCategoryParams): Promise<Product[]> {
+    const { categoryId } = params;
+
+    const categories = (await import(`./mocks/categories`)).default;
+
+    const category = categories.find((category) => category.slug === categoryId);
+
+    if (!category) {
+      throw new Error(`Category not found. ${categoryId}`);
+    }
+
+    const products = await this.getProducts({
+      first: params.first,
+      sortKey: params.sortKey,
+      reverse: params.reverse
+    });
+    const categoryProducts = products.filter((product) => category.productIds.includes(product.id));
+
+    return categoryProducts;
   }
 
   async getCategories(): Promise<Category[]> {
-    // Implementation here
-    throw new Error('Method not implemented.');
+    const categories = (await import(`./mocks/categories`)).default;
+
+    if (!categories) {
+      throw new Error('Categories not found.');
+    }
+
+    return categories;
   }
 
   async getMenu(handle: string): Promise<Menu[]> {
-    // Implementation here
-    throw new Error('Method not implemented.');
+    const menus = (await import(`./mocks/menus`)).default;
+    const menu = menus?.[handle];
+
+    if (!menu) {
+      throw new Error(`Menu not found. ${handle}`);
+    }
+
+    return menu;
   }
 
   async getPage(handle: string): Promise<Page> {
@@ -81,19 +119,74 @@ export class SimpleSalesService extends DataService {
     throw new Error('Method not implemented.');
   }
 
-  async getProduct(handle: string): Promise<Product | undefined> {
-    // Implementation here
-    throw new Error('Method not implemented.');
-  }
+  async getProduct(slug: string): Promise<Product | undefined> {
+    const products = (await import(`./mocks/products`)).default;
 
-  async getSimilarProducts(productId: string): Promise<Product[]> {
-    // Implementation here
-    throw new Error('Method not implemented.');
+    if (!products) {
+      throw new Error('Products not found.');
+    }
+
+    const product = products.find((product) => product.slug === slug);
+
+    if (!product) {
+      throw new Error(`Product not found. ${slug}`);
+    }
+
+    return product;
   }
 
   async getProducts(params: GetProductsParams): Promise<Product[]> {
-    // Implementation here
+    const products = (await import(`./mocks/products`)).default;
 
-    throw new Error('Method not implemented.');
+    if (!products) {
+      throw new Error('Products not found.');
+    }
+
+    let result = [...products];
+
+    const { first = 1000, sortKey, reverse } = params;
+
+    if (first && first < products.length) {
+      result = products.slice(0, first);
+    }
+
+    if (sortKey) {
+      const key = toCamelCase<keyof Product>(sortKey);
+
+      const getSortValue = (product: Product) => {
+        if (key === 'price') {
+          return Number(product.price.amount);
+        }
+
+        if (key === 'createdAt') {
+          return Number(product.createdAt);
+        }
+
+        return product[key];
+      };
+
+      result = products.sort((a, b) => {
+        const aValue = getSortValue(a) || 0;
+        console.log('🐛 ~ aValue:', aValue);
+        const bValue = getSortValue(b) || 0;
+        console.log('🐛 ~ bValue:', bValue);
+
+        let returnValue = 0;
+        if (aValue < bValue) {
+          returnValue = -1;
+        } else if (aValue > bValue) {
+          returnValue = 1;
+        }
+
+        return reverse ? returnValue * -1 : returnValue;
+      });
+    }
+
+    return result;
+  }
+
+  async getSimilarProducts(productId: string): Promise<Product[]> {
+    console.log('🐛 ~ productId:', productId);
+    return this.getProducts({ first: 3 });
   }
 }

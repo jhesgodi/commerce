@@ -46,8 +46,8 @@ export class CommerceService extends DataService {
     return this.dataService.getCategory(handle);
   }
 
-  public getProductsByCategory(params: GetProductsByCategoryParams): Promise<Product[]> {
-    return this.dataService.getProductsByCategory(params);
+  public getCategoryProducts(params: GetProductsByCategoryParams): Promise<Product[]> {
+    return this.dataService.getCategoryProducts(params);
   }
 
   public getCategories(): Promise<Category[]> {

@@ -16,6 +16,7 @@ export type Product = {
   options: ProductOption[];
   variants: ProductVariant[];
   descriptionHtml: string;
+  createdAt: string;
   updatedAt: string;
 };
 
@@ -89,6 +90,7 @@ export type Category = {
   title: string;
   description: string;
   updatedAt: string;
+  productIds: string[];
   // Define the properties of Collection
 };
 
@@ -109,14 +111,15 @@ export type Page = {
 
 export type GetProductsByCategoryParams = {
   categoryId: string;
-  sortKey?: string;
+  first?: number;
+  sortKey?: keyof Product;
   reverse?: boolean;
   // Define the properties of the parameters needed to get products by category
 };
 
 export type GetProductsParams = {
   first?: number;
-  sortKey?: string;
+  sortKey?: keyof Product;
   reverse?: boolean;
   searchValue?: string;
   // Define the properties of the parameters needed to get products

@@ -1,8 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import { createUrl } from 'lib/utils';
 import type { SortFilterItem } from 'lib/utils/constants';
+import { createUrl } from 'lib/utils/utils';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { ListItem, PathFilterItem } from '.';

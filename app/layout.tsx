@@ -1,6 +1,6 @@
 import Navbar from 'components/layout/navbar';
 import { GeistSans } from 'geist/font/sans';
-import { ensureStartsWith } from 'lib/utils';
+import { ensureStartsWith } from 'lib/utils/utils';
 import { ReactNode } from 'react';
 import './globals.css';
 

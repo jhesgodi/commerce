@@ -1,6 +1,7 @@
 import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
 import LogoSquare from 'components/logo-square';
+import ConnectWallet from 'components/wallet/connect-wallet';
 import api from 'lib/services';
 import { Menu } from 'lib/types';
 import Link from 'next/link';
@@ -10,7 +11,7 @@ import Search, { SearchSkeleton } from './search';
 const { SITE_NAME } = process.env;
 
 export default async function Navbar() {
-  const menu = await api.getMenu('next-js-frontend-header-menu');
+  const menu = await api.getMenu('header-menu');
 
   return (
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
@@ -33,7 +34,7 @@ export default async function Navbar() {
                 <li key={item.title}>
                   <Link
                     href={item.path}
-                    className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
+                    className="capitalize text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
                   >
                     {item.title}
                   </Link>
@@ -48,6 +49,11 @@ export default async function Navbar() {
           </Suspense>
         </div>
         <div className="flex justify-end md:w-1/3">
+          <Suspense fallback={<div />}>
+            <ConnectWallet />
+          </Suspense>
+        </div>
+        <div className="flex justify-end">
           <Suspense fallback={<OpenCart />}>
             <Cart />
           </Suspense>

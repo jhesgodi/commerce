@@ -38,8 +38,8 @@ function ThreeItemGridItem({
 }
 
 export async function ThreeItemGrid() {
-  const products = await api.getProductsByCategory({
-    categoryId: 'homepage-featured-products'
+  const products = await api.getCategoryProducts({
+    categoryId: 'featured'
   });
 
   const size = products?.length || 0;

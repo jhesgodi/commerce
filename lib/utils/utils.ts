@@ -29,3 +29,12 @@ export const validateEnvironmentVariables = () => {
     );
   }
 };
+
+export const ensureStartsWith = (stringToCheck: string, startsWith: string) =>
+  stringToCheck.startsWith(startsWith) ? stringToCheck : `${startsWith}${stringToCheck}`;
+
+export const toCamelCase = <T extends string>(str: T): T => {
+  return str
+    .toLowerCase()
+    .replace(/([-_][a-z])/gi, ($1) => $1.toUpperCase().replace('-', '').replace('_', '')) as T;
+};

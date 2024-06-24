@@ -30,7 +30,7 @@ export default async function CategoryPage({
 }) {
   const { sort } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
-  const products = await api.getProductsByCategory({
+  const products = await api.getCategoryProducts({
     categoryId: params.collection,
     sortKey,
     reverse

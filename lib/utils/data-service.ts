@@ -23,7 +23,7 @@ export abstract class DataService {
 
   abstract getCategory(handle: string): Promise<Category | undefined>;
 
-  abstract getProductsByCategory(params: GetProductsByCategoryParams): Promise<Product[]>;
+  abstract getCategoryProducts(params: GetProductsByCategoryParams): Promise<Product[]>;
 
   abstract getCategories(): Promise<Category[]>;
 

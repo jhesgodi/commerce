@@ -6,7 +6,7 @@ module.exports = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: []
+    remotePatterns: [{ hostname: 'via.placeholder.com' }, { hostname: 'immutable.github.io' }]
   },
   async redirects() {
     return [
