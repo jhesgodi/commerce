@@ -1,6 +1,8 @@
-import { config, passport as ImtblPassport } from '@imtbl/sdk';
-import { notifyError } from 'lib/utils/errors';
 import { useEffect, useState } from 'react';
+
+import { passport as ImtblPassport, config } from '@imtbl/sdk';
+
+import { notifyError } from 'lib/utils/errors';
 import { PASSPORT_CONFIG } from 'state/config/envs';
 
 export type usePassportClientProps = {
@@ -9,6 +11,10 @@ export type usePassportClientProps = {
 
 export type UserInfo = Awaited<ReturnType<ImtblPassport.Passport['getUserInfo']>>;
 
+/**
+ * Creates an instance of Immutable passport SDK
+ * https://docs.immutable.com/docs/x/passport/install#2-initialise-passport
+ */
 export const useImtblPassportClient = ({ environment }: usePassportClientProps) => {
   const { clientId, redirectUri, logoutRedirectUri } = PASSPORT_CONFIG;
   const [passport, setPassport] = useState<ImtblPassport.Passport | undefined>(undefined);

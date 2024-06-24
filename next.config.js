@@ -1,5 +1,16 @@
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+
 /** @type {import('next').NextConfig} */
 module.exports = {
+  serverRuntimeConfig: {
+    // Will only be available on the server side
+    mySecret: 'secret',
+    secondSecret: process.env.SECOND_SECRET // Pass through env variables
+  },
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    staticFolder: '/static'
+  },
   eslint: {
     // Disabling on production builds because we're running checks on PRs via GitHub Actions.
     ignoreDuringBuilds: true
@@ -16,5 +27,9 @@ module.exports = {
         permanent: true
       }
     ];
+  },
+  webpack: (config) => {
+    config.plugins.push(new NodePolyfillPlugin());
+    return config;
   }
 };

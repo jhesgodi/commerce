@@ -6,6 +6,11 @@ export type UseCheckoutClientProps = {
   passport: ImtblPassport.Passport | undefined;
   environment: config.Environment;
 };
+
+/**
+ * Creates an instance of Immutable checkout SDK
+ * https://docs.immutable.com/docs/zkEVM/products/checkout/sdk
+ */
 export const useImtblCheckoutClient = ({ passport, environment }: UseCheckoutClientProps) => {
   const [checkout, setCheckout] = useState<ImtblCheckout.Checkout | undefined>(undefined);
   useEffect(() => {

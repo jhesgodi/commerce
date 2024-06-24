@@ -22,11 +22,16 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.7.2",
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.1.3",
+    "@imtbl/sdk": "^1.43.2",
     "clsx": "^2.1.0",
+    "ethereumjs-wallet": "^1.0.2",
+    "ethers": "^6.13.1",
     "geist": "^1.3.0",
     "next": "14.2.2",
+    "node-polyfill-webpack-plugin": "^4.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

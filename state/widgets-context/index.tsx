@@ -1,6 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { checkout as ImtblCheckout } from '@imtbl/sdk';
-import { Dispatch, ReactNode, createContext, useEffect, useMemo, useReducer } from 'react';
+import {
+  Dispatch,
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer
+} from 'react';
 import {
   ENVIRONMENT as environment,
   WALLET_CONNECT_CONFIG as walletConnect
@@ -17,14 +25,14 @@ type WidgetsContextState = {
   dispatch: Dispatch<WidgetsAction>;
 };
 
-export const WidgetsContext = createContext<WidgetsContextState>({
+const WidgetsContext = createContext<WidgetsContextState>({
   state: intialWidgetsState,
   dispatch: () => {}
 });
 
 WidgetsContext.displayName = 'WidgetsContext';
 
-export const useWidgetsValue = (overrides: Partial<WidgetsState> = {}) => {
+const useWidgetsValue = (overrides: Partial<WidgetsState> = {}) => {
   const [state, dispatch] = useReducer(widgetsReducer, { ...intialWidgetsState, ...overrides });
   const values = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   return values;
@@ -40,9 +48,10 @@ export const WidgetsProvider = ({ children }: { children: ReactNode }) => {
   const checkoutInstance = useImtblCheckoutClient({ passport: passportInstance, environment });
 
   useEffect(() => {
-    // create widgets factory and set passport & checkout instances
+    if (factory) return;
     if (!dispatch || !passportInstance || !checkoutInstance) return;
 
+    // create widgets factory and set passport & checkout instances
     (async () => {
       try {
         const widgetsFactory = await checkoutInstance.widgets({
@@ -58,7 +67,7 @@ export const WidgetsProvider = ({ children }: { children: ReactNode }) => {
         notifyError(err);
       }
     })();
-  }, [dispatch, passportInstance, checkoutInstance]);
+  }, [passportInstance, checkoutInstance, factory, dispatch]);
 
   useEffect(() => {
     // forecast provider changed after reconnecting wallet
@@ -77,4 +86,14 @@ export const WidgetsProvider = ({ children }: { children: ReactNode }) => {
   }, [provider, passportInstance, dispatch]);
 
   return <WidgetsContext.Provider value={widgetsValue}>{children}</WidgetsContext.Provider>;
+};
+
+export const useWidgets = () => {
+  const context = useContext(WidgetsContext);
+  if (context === undefined) {
+    const error = new Error('useWidgets must be used within a WidgetsContext.Provider');
+    notifyError(error);
+    throw error;
+  }
+  return [context.state, context.dispatch] as const;
 };

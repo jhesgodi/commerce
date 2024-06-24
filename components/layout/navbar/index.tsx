@@ -1,7 +1,6 @@
 import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
 import LogoSquare from 'components/logo-square';
-import ConnectWallet from 'components/wallet/connect-wallet';
 import api from 'lib/services';
 import { Menu } from 'lib/types';
 import Link from 'next/link';
@@ -49,9 +48,7 @@ export default async function Navbar() {
           </Suspense>
         </div>
         <div className="flex justify-end md:w-1/3">
-          <Suspense fallback={<div />}>
-            <ConnectWallet />
-          </Suspense>
+          <Suspense fallback={<div />}>{/* <ConnectWallet /> */}</Suspense>
         </div>
         <div className="flex justify-end">
           <Suspense fallback={<OpenCart />}>

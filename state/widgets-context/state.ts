@@ -44,7 +44,7 @@ export type WidgetsState = {
    * Imtbl Checkout Widgets Factory
    * https://docs.immutable.com/docs/zkEVM/products/checkout/widgets/setup#widget-factory
    */
-  factory: ImtblCheckout.WidgetsFactory | undefined;
+  factory: ImmutableCheckoutWidgets.WidgetsFactory | undefined;
   /**
    * Connected Wallet Web3Provider
    */
