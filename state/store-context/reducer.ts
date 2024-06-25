@@ -55,25 +55,29 @@ export const StoreReducer: Reducer<StoreState, StoreAction> = (state, action) =>
     }
     case 'UPDATE_ITEM_QTY': {
       const { id, qty } = action.payload;
-      const item = state.cartItems.find(({ productId }) => productId === id);
+      const indexAt = state.cartItems.findIndex(({ productId }) => productId === id);
 
-      if (!item) {
+      if (indexAt === -1) {
         return state;
       }
 
+      const item = state.cartItems[indexAt]!;
       const newQty = item.qty + qty;
 
-      return {
-        ...state,
-        cartItems: [
-          ...state.cartItems.filter(({ productId }) => productId !== id),
-          ...(newQty > 0 ? [{ ...item, qty: newQty }] : [])
-        ]
-      };
+      if (newQty <= 0) {
+        return {
+          ...state,
+          cartItems: state.cartItems.filter(({ productId }) => productId !== id)
+        };
+      }
+
+      const items = [...state.cartItems];
+      items.splice(indexAt, 1, { ...item, qty: newQty });
+
+      return { ...state, cartItems: items };
     }
     case 'CLEAR_CART':
       return { ...state, cartItems: [] };
     default:
-      return state;
   }
 };
