@@ -17,7 +17,7 @@
     "db:create": "npx prisma db push",
     "db:seed": "npx prisma db seed",
     "db:explorer": "npx prisma studio",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && pnpm db:create && pnpm db:seed"
   },
   "prisma": {
     "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
