@@ -15,8 +15,8 @@ dependencies:
     specifier: ^2.1.3
     version: 2.1.4(react@18.2.0)
   '@imtbl/sdk':
-    specifier: ^1.43.2
-    version: 1.43.5(@emotion/react@11.11.4)(@types/react@18.2.79)(embla-carousel-react@8.1.5)(framer-motion@10.18.0)(hardhat@2.22.5)(react-dom@18.2.0)(react@18.2.0)
+    specifier: 1.43.2
+    version: 1.43.2(@emotion/react@11.11.4)(@types/react@18.2.79)(embla-carousel-react@8.1.5)(framer-motion@10.18.0)(hardhat@2.22.5)(react-dom@18.2.0)(react@18.2.0)
   '@prisma/client':
     specifier: ^5.15.1
     version: 5.15.1(prisma@5.15.1)
@@ -1045,8 +1045,8 @@ packages:
       - supports-color
     dev: false
 
-  /@imtbl/sdk@1.43.5(@emotion/react@11.11.4)(@types/react@18.2.79)(embla-carousel-react@8.1.5)(framer-motion@10.18.0)(hardhat@2.22.5)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-JfQggDDz6d7Slyx8Udn1FcWrdPqy3epYlMEFiE6qxQwPIvJLrRZfeD08LMbgXTy784pju4vtcXZwT3vk7ECLOQ==}
+  /@imtbl/sdk@1.43.2(@emotion/react@11.11.4)(@types/react@18.2.79)(embla-carousel-react@8.1.5)(framer-motion@10.18.0)(hardhat@2.22.5)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-tJ9OM15KiwqRja198pFx0FAj26Z21ORmKTF7sIuzbMjAkkTtdpovjebOQrteEaJ7El7/f+2jt4pYf4ebz3rcyQ==}
     engines: {node: '>=20.0.0'}
     dependencies:
       '@0xsequence/abi': 1.9.32
