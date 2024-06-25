@@ -46,7 +46,7 @@ const products: Product[] = [
         selectedOptions: [
           {
             name: 'rarity',
-            value: 'rare'
+            value: 'common'
           }
         ],
         price: {
@@ -134,7 +134,7 @@ const products: Product[] = [
         selectedOptions: [
           {
             name: 'rarity',
-            value: 'rare'
+            value: 'common'
           }
         ],
         price: {

@@ -4,6 +4,12 @@ import { checkout as ImtblCheckout, config as ImtblConfig } from '@imtbl/sdk';
 
 export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || '<Shop>';
 
+export const COLLECTION_NAME = process.env.NEXT_PUBLIC_COLLECTION_NAME || '';
+
+export const SITE_BASE_URL = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : 'http://localhost:3000';
+
 /**
  * Environment
  * @example
@@ -37,7 +43,9 @@ export const WALLET_CONNECT_CONFIG: ImtblCheckout.WalletConnectConfig | undefine
         name: SITE_NAME,
         description: `Buy items on ${SITE_NAME}`,
         icons: [process.env.NEXT_PUBLIC_WALLET_CONNECT_ICON_URL!],
-        url: process.env.NEXT_PUBLIC_WALLET_CONNECT_URL!
+        url: process.env.NEXT_PUBLIC_WALLET_CONNECT_URL || SITE_BASE_URL
       }
     }
   : undefined;
+
+export const IMTBL_HUB_ENVIRONMENT_ID = process.env.NEXT_PUBLIC_IMTBL_HUB_ENVIRONMENT_ID!;

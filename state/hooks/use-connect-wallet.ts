@@ -2,7 +2,9 @@ import { checkout as ImtblCheckout } from '@imtbl/sdk';
 import { notifyError } from 'lib/utils/errors';
 import { walletLs } from 'lib/utils/utils';
 import { useCallback, useEffect } from 'react';
-import { useStore, useWidgets } from 'state';
+import { WIDGETS_MOUNT_ROOT_ID } from 'state/config/const';
+import { useStore } from 'state/store-context';
+import { useWidgets } from 'state/widgets-context';
 
 /**
  * Orchestrates connecting and disconnecting wallet
@@ -56,18 +58,15 @@ export const useConnectWallet = () => {
     providerName?: ImtblCheckout.WalletProviderName,
     onSuccess?: () => void
   ) => {
-    console.log('🐛 ~ -------------:', context[0].connectWidget);
-    // console.log('🐛 ~ connectWidget:', connectWidget);
+    if (providerName) {
+      connectFromWalletProviderName(providerName, onSuccess);
+      return;
+    }
 
-    // if (providerName) {
-    //   connectFromWalletProviderName(providerName, onSuccess);
-    //   return;
-    // }
+    if (!connectWidget) return;
 
-    // if (!connectWidget) return;
-
-    // storeDispatch({ payload: { type: 'SET_WALLET_CONNECTING', connecting: true } });
-    // connectWidget?.mount(WIDGETS_MOUNT_ROOT_ID);
+    storeDispatch({ payload: { type: 'SET_WALLET_CONNECTING', connecting: true } });
+    connectWidget?.mount(WIDGETS_MOUNT_ROOT_ID);
   };
 
   const handleDisconnectWallet = useCallback(() => {
@@ -78,7 +77,7 @@ export const useConnectWallet = () => {
   useEffect(() => {
     // on page refresh, reconnect wallet previously connected
     const reconnecting = walletLs.connecting.read();
-    const walletProviderName = walletLs.connecting.read();
+    const walletProviderName = walletLs.providerName.read();
 
     if ((!walletProviderName || !checkout || provider) && reconnecting) {
       walletLs.connecting.write(false);
@@ -140,7 +139,6 @@ export const useConnectWallet = () => {
   }, [connectWidget, widgetsDispatch, storeDispatch, handleDisconnectWallet]);
 
   return {
-    walletAddress,
     connectWallet: handleConnectWallet,
     disconnectWallet: handleDisconnectWallet
   };

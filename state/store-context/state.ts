@@ -1,5 +1,5 @@
 import { checkout as ImtblCheckout } from '@imtbl/sdk';
-import { Product } from 'lib/types';
+import { CartItem, Product } from 'lib/types';
 
 export type StoreState = {
   walletOpen: boolean;
@@ -10,6 +10,9 @@ export type StoreState = {
     product: Product;
     order: ImtblCheckout.SaleSuccess;
   };
+  cartOpen: boolean;
+  cartProcessing: boolean;
+  cartItems: CartItem[];
 };
 
 export const initialStoreState: StoreState = {
@@ -20,5 +23,8 @@ export const initialStoreState: StoreState = {
   checkoutResult: {
     product: undefined as unknown as Product,
     order: {} as ImtblCheckout.SaleSuccess
-  }
+  },
+  cartOpen: false,
+  cartProcessing: false,
+  cartItems: []
 };

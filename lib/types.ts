@@ -73,15 +73,12 @@ export type Cart = {
 };
 
 export type CartItem = {
-  id: string;
-  cost: Money;
-  quantity: number;
-  title: string;
-  image: Image;
-  options: {
-    name: string;
-    value: string;
-  }[];
+  productId: string;
+  qty: number;
+  name: string;
+  image: string;
+  description: string;
+  product: Product;
 };
 
 export type Category = {

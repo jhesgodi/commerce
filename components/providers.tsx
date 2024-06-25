@@ -1,11 +1,12 @@
 'use client';
 
-import { StoreProvider } from 'state';
+import { StoreProvider } from 'state/store-context';
+import { WidgetsProvider } from 'state/widgets-context';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <StoreProvider>{children}</StoreProvider>
-    // <WidgetsProvider>{children}</WidgetsProvider>
-    // <div>{children}</div>
+    <WidgetsProvider>
+      <StoreProvider>{children}</StoreProvider>
+    </WidgetsProvider>
   );
 }

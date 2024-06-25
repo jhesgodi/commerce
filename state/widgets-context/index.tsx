@@ -10,6 +10,7 @@ import {
   useReducer
 } from 'react';
 import {
+  WALLET_CONNECT_CONFIG,
   ENVIRONMENT as environment,
   WALLET_CONNECT_CONFIG as walletConnect
 } from 'state/config/envs';
@@ -60,9 +61,34 @@ export const WidgetsProvider = ({ children }: { children: ReactNode }) => {
             walletConnect
           }
         });
+        const connectWidget = widgetsFactory.create(ImtblCheckout.WidgetType.CONNECT);
+        const swapWidget = widgetsFactory.create(ImtblCheckout.WidgetType.SWAP);
+        const bridgeWidget = widgetsFactory.create(ImtblCheckout.WidgetType.BRIDGE);
+        const onRampWidget = widgetsFactory.create(ImtblCheckout.WidgetType.ONRAMP);
+        const walletWidget = widgetsFactory.create(ImtblCheckout.WidgetType.WALLET);
+        const saleWidget = widgetsFactory.create(ImtblCheckout.WidgetType.SALE, {
+          config: {
+            hideExcludedPaymentTypes: true,
+            walletConnect: WALLET_CONNECT_CONFIG
+          }
+        });
+
         dispatch({ payload: { type: 'SET_FACTORY', factory: widgetsFactory } });
         dispatch({ payload: { type: 'SET_PASSPORT', passport: passportInstance } });
         dispatch({ payload: { type: 'SET_CHECKOUT', checkout: checkoutInstance } });
+        dispatch({
+          payload: {
+            type: 'SET_WIDGET',
+            widget: {
+              connectWidget,
+              walletWidget,
+              bridgeWidget,
+              swapWidget,
+              onRampWidget,
+              saleWidget
+            }
+          }
+        });
       } catch (err) {
         notifyError(err);
       }

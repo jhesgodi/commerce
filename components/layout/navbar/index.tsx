@@ -1,13 +1,16 @@
+import Link from 'next/link';
+import { Suspense } from 'react';
+
+import api from 'lib/services';
+import { Menu } from 'lib/types';
+
 import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
 import LogoSquare from 'components/logo-square';
-import api from 'lib/services';
-import { Menu } from 'lib/types';
-import Link from 'next/link';
-import { Suspense } from 'react';
+import ConnectWallet from 'components/wallet/connect-wallet';
+
 import MobileMenu from './mobile-menu';
 import Search, { SearchSkeleton } from './search';
-const { SITE_NAME } = process.env;
 
 export default async function Navbar() {
   const menu = await api.getMenu('header-menu');
@@ -24,7 +27,7 @@ export default async function Navbar() {
           <Link href="/" className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6">
             <LogoSquare />
             <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
-              {SITE_NAME}
+              {process.env.SITE_NAME}
             </div>
           </Link>
           {menu.length ? (
@@ -48,7 +51,9 @@ export default async function Navbar() {
           </Suspense>
         </div>
         <div className="flex justify-end md:w-1/3">
-          <Suspense fallback={<div />}>{/* <ConnectWallet /> */}</Suspense>
+          <Suspense fallback={<div />}>
+            <ConnectWallet />
+          </Suspense>
         </div>
         <div className="flex justify-end">
           <Suspense fallback={<OpenCart />}>

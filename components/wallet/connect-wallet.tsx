@@ -10,23 +10,23 @@ import {
   WalletIcon
 } from '@heroicons/react/24/outline';
 
-import { useStore, useWidgets } from 'state';
 import { WIDGETS_MOUNT_ROOT_ID } from 'state/config/const';
+import { useConnectWallet, useWalletBalances } from 'state/hooks';
+import { useStore } from 'state/store-context';
 
 export default function ConnectWallet() {
   const [{ connected, connecting, walletAddress, walletOpen }] = useStore();
-  const [{ connectWidget }] = useWidgets();
+  const { openWallet } = useWalletBalances();
+  const { connectWallet } = useConnectWallet();
 
   const [Icon, setIcon] = useState<any>(null);
 
   const busy = walletOpen || connecting;
 
   let copy = 'Connect Wallet';
-
   if (connecting) {
     copy = 'Connecting...';
   }
-
   if (connected) {
     copy = 'Your Balances';
   }
@@ -61,18 +61,14 @@ export default function ConnectWallet() {
           }
         )}
         onClick={() => {
-          // console.log('🐛 ~ onClick:', {
-          //   connected,
-          //   busy,
-          //   connecting
-          // });
-          // if (busy) return;
-          // if (connected) {
-          //   openWallet();
-          //   return;
-          // }
-          // connectWallet();
-          console.log('🐛 ~ connectWidget:', connectWidget);
+          if (busy) return;
+
+          if (connected) {
+            openWallet();
+            return;
+          }
+
+          connectWallet();
         }}
       >
         {Icon && (
