@@ -21,3 +21,5 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   return NextResponse.json({ params, products });
 }
+
+export const dynamic = 'force-dynamic';
