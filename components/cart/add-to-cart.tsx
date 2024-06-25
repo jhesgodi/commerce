@@ -66,7 +66,7 @@ function SubmitButton({
             <ArrowRightCircleIcon className="h-5" />
           )}
         </div>
-        Buy Now
+        1-Click Buy
       </button>
       <button
         onClick={(e: React.FormEvent<HTMLButtonElement>) => {

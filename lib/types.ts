@@ -87,6 +87,7 @@ export type Category = {
   title: string;
   description: string;
   updatedAt: string;
+  createdAt: string;
   productIds: string[];
   // Define the properties of Collection
 };

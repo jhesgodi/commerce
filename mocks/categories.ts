@@ -7,7 +7,8 @@ const categories: Category[] = [
     title: 'Featured',
     description: 'Featured products',
     productIds: ['1', '2', '3'],
-    updatedAt: '2021-01-01T00:00:00Z'
+    updatedAt: '2021-01-01T00:00:00Z',
+    createdAt: '2021-01-01T00:00:00Z'
   },
   {
     slug: 'carousel',
@@ -15,7 +16,8 @@ const categories: Category[] = [
     title: 'Carousel',
     description: 'Carousel products',
     productIds: ['1', '2', '3'],
-    updatedAt: '2021-01-01T00:00:00Z'
+    updatedAt: '2021-01-01T00:00:00Z',
+    createdAt: '2021-01-01T00:00:00Z'
   }
 ];
 

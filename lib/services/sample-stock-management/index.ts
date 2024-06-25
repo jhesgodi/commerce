@@ -52,7 +52,7 @@ export class SimpleSalesService extends DataService {
   }
 
   async getCategory(handle: string): Promise<Category | undefined> {
-    const categories = (await import(`./mocks/categories`)).default;
+    const categories = (await import(`mocks/categories`)).default;
 
     if (!categories) {
       throw new Error('Categories not found.');
@@ -70,7 +70,7 @@ export class SimpleSalesService extends DataService {
   async getCategoryProducts(params: GetProductsByCategoryParams): Promise<Product[]> {
     const { categoryId } = params;
 
-    const categories = (await import(`./mocks/categories`)).default;
+    const categories = (await import(`mocks/categories`)).default;
 
     const category = categories.find((category) => category.slug === categoryId);
 
@@ -89,7 +89,7 @@ export class SimpleSalesService extends DataService {
   }
 
   async getCategories(): Promise<Category[]> {
-    const categories = (await import(`./mocks/categories`)).default;
+    const categories = (await import(`mocks/categories`)).default;
 
     if (!categories) {
       throw new Error('Categories not found.');
@@ -99,7 +99,7 @@ export class SimpleSalesService extends DataService {
   }
 
   async getMenu(handle: string): Promise<Menu[]> {
-    const menus = (await import(`./mocks/menus`)).default;
+    const menus = (await import(`mocks/menus`)).default;
     const menu = menus?.[handle];
 
     if (!menu) {
@@ -120,7 +120,7 @@ export class SimpleSalesService extends DataService {
   }
 
   async getProduct(slug: string): Promise<Product | undefined> {
-    const products = (await import(`./mocks/products`)).default;
+    const products = (await import(`mocks/products`)).default;
 
     if (!products) {
       throw new Error('Products not found.');
@@ -136,7 +136,7 @@ export class SimpleSalesService extends DataService {
   }
 
   async getProducts(params: GetProductsParams): Promise<Product[]> {
-    const products = (await import(`./mocks/products`)).default;
+    const products = (await import(`mocks/products`)).default;
 
     if (!products) {
       throw new Error('Products not found.');

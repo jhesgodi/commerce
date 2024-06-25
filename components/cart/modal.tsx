@@ -10,6 +10,7 @@ import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { SALE_WIDGET_MOUNT_ROOT_ID } from 'state/config/const';
 import { useStore } from 'state/store-context';
 import CloseCart from './close-cart';
+import { DeleteItemButton } from './delete-item-button';
 import { EditItemQuantityButton } from './edit-item-quantity-button';
 import OpenCart from './open-cart';
 
@@ -118,7 +119,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                         >
                           <div className="relative flex w-full flex-row justify-between px-1 py-4">
                             <div className="absolute z-40 -mt-2 ml-[55px]">
-                              {/* <DeleteItemButton item={item} /> */}
+                              <DeleteItemButton item={item} />
                             </div>
                             <Link
                               href="#"

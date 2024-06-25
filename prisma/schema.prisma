@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id              String                 @id @default(cuid())
+  name            String
+  description     String
+  price           String
+  stock           Int
+  image           String
+  productOptions  String                 @default("[]") @map("product_options")
+  productVariants String                 @default("[]") @map("product_variants")
+  createdAt       DateTime               @default(now()) @map("created_at")
+  updatedAt       DateTime               @default(now()) @map("updated_at")
+  categories      CategoriesOnProducts[]
+  orderProduct    OrderProduct[]
+
+  @@index(id)
+}
+
+model Category {
+  id          String                 @id @default(cuid())
+  slug        String                 @unique
+  path        String
+  title       String
+  description String
+  updatedAt   DateTime               @default(now()) @map("updated_at")
+  createdAt   DateTime               @default(now()) @map("created_at")
+  products    CategoriesOnProducts[]
+}
+
+model CategoriesOnProducts {
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String   @map("category_id")
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  String   @map("product_id")
+
+  @@id([categoryId, productId])
+}
+
+model Order {
+  id           String         @id @default(cuid())
+  status       String
+  currency     String
+  totalPrice   String         @map("total_price")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @default(now()) @map("updated_at")
+  orderProduct OrderProduct[]
+}
+
+model OrderProduct {
+  id        String  @id @default(cuid())
+  quantity  Int
+  unitPrice String  @map("unit_price")
+  tokenId   String? @map("token_id")
+  productId String  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+  orderId   String  @map("order_id")
+  order     Order   @relation(fields: [orderId], references: [id])
+}

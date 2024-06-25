@@ -13,7 +13,13 @@
     "lint-staged": "lint-staged",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
-    "test": "pnpm lint && pnpm prettier:check"
+    "test": "pnpm lint && pnpm prettier:check",
+    "db:create": "npx prisma db push",
+    "db:seed": "npx prisma db seed",
+    "db:explorer": "npx prisma studio"
+  },
+  "prisma": {
+    "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "git": {
     "pre-commit": "lint-staged"
@@ -51,6 +57,7 @@
     "postcss": "^8.4.38",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
+    "prisma": "^5.15.1",
     "tailwindcss": "^3.4.3",
     "typescript": "5.4.5"
   }
