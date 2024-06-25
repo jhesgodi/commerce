@@ -51,7 +51,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
   const cartCurrencyCode = cartItems[0]?.product.variants[0]?.price.currency || 'USD';
   const cartTotal = cartItems.reduce((acc, item) => {
     const variant = item.product.variants.find((v) => v.id === item.productId);
-    return acc + (variant?.price.amount || 0) * item.qty;
+    return acc + Number(variant?.price.amount || 0) * item.qty;
   }, 0);
   const cartFee = cartTotal * 0.2;
 

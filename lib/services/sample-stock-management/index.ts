@@ -151,7 +151,7 @@ export class SimpleSalesService extends DataService {
     }
 
     if (sortKey) {
-      const key = toCamelCase<keyof Product>(sortKey);
+      const key = toCamelCase<keyof Product>(sortKey as keyof Product);
 
       const getSortValue = (product: Product) => {
         if (key === 'price') {
