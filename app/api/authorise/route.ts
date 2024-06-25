@@ -94,7 +94,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         orderProduct: {
           create: products.map(({ product_id, quantity }) => ({
             unitPrice: productsPricing[product_id]!.amount.toString(),
-            tokenId: JSON.stringify(tokenIds[product_id]!),
+            tokenIds: JSON.stringify(tokenIds[product_id]!),
             quantity,
             product: { connect: { id: dbProducts.find(({ id }) => id === product_id)!.id } }
           }))

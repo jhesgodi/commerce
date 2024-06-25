@@ -20,7 +20,7 @@ const products: Product[] = [
         height: 1200
       }
     ],
-    stock: 10,
+    stock: 1000,
     inStock: true,
     options: [
       {
@@ -108,7 +108,7 @@ const products: Product[] = [
         height: 1200
       }
     ],
-    stock: 10,
+    stock: 1000,
     inStock: true,
     options: [
       {
@@ -196,7 +196,7 @@ const products: Product[] = [
         height: 1200
       }
     ],
-    stock: 10,
+    stock: 1000,
     inStock: true,
     options: [
       {

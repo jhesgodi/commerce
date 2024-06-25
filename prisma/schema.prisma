@@ -3,7 +3,6 @@
 
 generator client {
   provider      = "prisma-client-js"
-  output        = "../../node_modules/.prisma/client"
   binaryTargets = ["native", "darwin-arm64"]
 }
 
@@ -64,7 +63,7 @@ model OrderProduct {
   id        String  @id @default(cuid())
   quantity  Int
   unitPrice String  @map("unit_price")
-  tokenId   String? @map("token_id")
+  tokenIds  String? @map("token_id")
   productId String  @map("product_id")
   product   Product @relation(fields: [productId], references: [id])
   orderId   String  @map("order_id")
