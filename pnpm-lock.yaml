@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@ethersproject/providers':
     specifier: ^5.7.2
@@ -14,7 +18,7 @@ dependencies:
     specifier: ^1.43.2
     version: 1.43.5(@emotion/react@11.11.4)(@types/react@18.2.79)(embla-carousel-react@8.1.5)(framer-motion@10.18.0)(hardhat@2.22.5)(react-dom@18.2.0)(react@18.2.0)
   '@prisma/client':
-    specifier: 5.15.1
+    specifier: ^5.15.1
     version: 5.15.1(prisma@5.15.1)
   clsx:
     specifier: ^2.1.0
@@ -103,13 +107,13 @@ packages:
     resolution: {integrity: sha512-UhX6FYTzuVXiCr0fzLHV/bjU9I950ysYyNszfZeeVDlAlpXrn27ujt7Cjz7ggavPimv1zWnwvL0/5HA7OQaxJg==}
     dev: false
 
-  /@0xsequence/core@1.9.32(ethers@6.11.1):
+  /@0xsequence/core@1.9.32(ethers@5.7.2):
     resolution: {integrity: sha512-Hf+MNy6AF2wyuHhPm+xc68yutXvj2SvDsvMlBBKTSdXSvZoqQFQo2k61+YMJdT1nV6NZcn8+HCca6peHO2G4FA==}
     peerDependencies:
       ethers: '>=5.5'
     dependencies:
       '@0xsequence/abi': 1.9.32
-      ethers: 6.11.1
+      ethers: 5.7.2
     dev: false
 
   /@adraffy/ens-normalize@1.10.1:
@@ -544,6 +548,7 @@ packages:
 
   /@emotion/memoize@0.7.4:
     resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -1045,7 +1050,7 @@ packages:
     engines: {node: '>=20.0.0'}
     dependencies:
       '@0xsequence/abi': 1.9.32
-      '@0xsequence/core': 1.9.32(ethers@6.11.1)
+      '@0xsequence/core': 1.9.32(ethers@5.7.2)
       '@biom3/design-tokens': 0.4.0
       '@biom3/react': 0.24.7(@emotion/react@11.11.4)(@rive-app/react-canvas-lite@4.12.0)(embla-carousel-react@8.1.5)(framer-motion@10.18.0)(react-dom@18.2.0)(react@18.2.0)
       '@ethersproject/abi': 5.7.0
@@ -8485,17 +8490,20 @@ packages:
 
   /pg-connection-string@2.6.4:
     resolution: {integrity: sha512-v+Z7W/0EO707aNMaAEfiGnGL9sxxumwLl2fJvCQtMn9Fxsg+lPpPkdcyBSv/KFgpGdYkMfn+EI1Or2EHjpgLCA==}
+    requiresBuild: true
     dev: false
     optional: true
 
   /pg-int8@1.0.1:
     resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
     engines: {node: '>=4.0.0'}
+    requiresBuild: true
     dev: false
     optional: true
 
   /pg-pool@3.6.2(pg@8.12.0):
     resolution: {integrity: sha512-Htjbg8BlwXqSBQ9V8Vjtc+vzf/6fVUuak/3/XXKA9oxZprwW3IMDQTGHP+KDmVL7rtd+R1QjbnCFPuTHm3G4hg==}
+    requiresBuild: true
     peerDependencies:
       pg: '>=8.0'
     dependencies:
@@ -8505,12 +8513,14 @@ packages:
 
   /pg-protocol@1.6.1:
     resolution: {integrity: sha512-jPIlvgoD63hrEuihvIg+tJhoGjUsLPn6poJY9N5CnlPd91c2T18T/9zBtLxZSb1EhYxBRoZJtzScCaWlYLtktg==}
+    requiresBuild: true
     dev: false
     optional: true
 
   /pg-types@2.2.0:
     resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dependencies:
       pg-int8: 1.0.1
       postgres-array: 2.0.0
@@ -8542,6 +8552,7 @@ packages:
 
   /pgpass@1.0.5:
     resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
+    requiresBuild: true
     dependencies:
       split2: 4.2.0
     dev: false
@@ -8709,24 +8720,28 @@ packages:
   /postgres-array@2.0.0:
     resolution: {integrity: sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dev: false
     optional: true
 
   /postgres-bytea@1.0.0:
     resolution: {integrity: sha512-xy3pmLuQqRBZBXDULy7KbaitYqLcmxigw14Q5sj8QBVLqEwXfeybIKVWiqAXTlcvdvb0+xkOtDbfQMOf4lST1w==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dev: false
     optional: true
 
   /postgres-date@1.0.7:
     resolution: {integrity: sha512-suDmjLVQg78nMK2UZ454hAG+OAW+HQPZ6n++TNDUX+L0+uUlLywnoxJKDou51Zm+zTCjrCl0Nq6J9C5hP9vK/Q==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dev: false
     optional: true
 
   /postgres-interval@1.2.0:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dependencies:
       xtend: 4.0.2
     dev: false
