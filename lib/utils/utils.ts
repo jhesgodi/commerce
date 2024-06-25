@@ -35,6 +35,8 @@ export const validateEnvironmentVariables = () => {
       )}\n`
     );
   }
+
+  return;
 };
 
 /**
@@ -58,28 +60,30 @@ export const isEmpty = (obj?: Record<string, any>) =>
 /**
  * Safely parse JSON
  */
-export const safeJsonParse = <T>(json: string, fallback = {}): T => {
-  if (!json) return fallback as T;
+export const safeJsonParse = <T extends any>(json: string, fallback: T) => {
+  if (!json) return (fallback || {}) as T;
 
   try {
     return JSON.parse(json) as T;
   } catch (e) {
-    return fallback as T;
+    return (fallback || {}) as T;
   }
 };
 
 /**
  * Read from local storage
  */
-export const readLocalStorage = (key: string) => {
-  if (key === undefined) return '';
+export const readLocalStorage = <T>(key: string, fallback: T): T => {
+  if (key === undefined) return fallback as unknown as T;
 
   try {
     const value = localStorage.getItem(key);
-    return value ? safeJsonParse(value) : undefined;
+    return value ? safeJsonParse(value, fallback) : fallback;
   } catch (e) {
     typeof window !== undefined && notifyError(e);
   }
+
+  return fallback;
 };
 
 /**
@@ -110,7 +114,7 @@ export const localStorageValue = (_key: string) => {
   const key = `@imtbl/commerce-${_key}`;
   return {
     write: (value: any) => writeLocalStorage(key, value),
-    read: () => readLocalStorage(key),
+    read: <T extends any>(fallback = '' as T) => readLocalStorage<T>(key, fallback),
     clear: () => writeLocalStorage(key, undefined)
   };
 };

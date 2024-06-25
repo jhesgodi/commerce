@@ -76,8 +76,8 @@ export const useConnectWallet = () => {
 
   useEffect(() => {
     // on page refresh, reconnect wallet previously connected
-    const reconnecting = walletLs.connecting.read();
-    const walletProviderName = walletLs.providerName.read();
+    const reconnecting = walletLs.connecting.read<boolean>();
+    const walletProviderName = walletLs.providerName.read<ImtblCheckout.WalletProviderName>();
 
     if ((!walletProviderName || !checkout || provider) && reconnecting) {
       walletLs.connecting.write(false);
