@@ -46,11 +46,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     };
 
     const quoteResponse: QuoteResponse = {
-      products: products.map(({ id, price }) => ({
-        product_id: id,
-        quantity: quoteProducts.find(({ product_id }) => product_id === id)?.quantity!,
-        pricing: getPrices(price, conversionRates)
-      })),
+      products: products.map(({ id, price }) => {
+        const quoteProduct = quoteProducts.find(({ product_id }) => product_id === id)!;
+        const qtyPrice = {
+          ...price,
+          amount: (Number(price.amount) * quoteProduct.quantity).toString()
+        };
+        return {
+          product_id: id,
+          quantity: quoteProduct.quantity,
+          pricing: getPrices(qtyPrice, conversionRates)
+        };
+      }),
       totals: getPrices(totalPrice, conversionRates)
     };
 
