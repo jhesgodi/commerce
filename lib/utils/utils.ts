@@ -58,13 +58,13 @@ export const isEmpty = (obj?: Record<string, any>) =>
 /**
  * Safely parse JSON
  */
-export const safeJsonParse = (json: string) => {
-  if (!json) return {};
+export const safeJsonParse = <T>(json: string, fallback = {}): T => {
+  if (!json) return fallback as T;
 
   try {
-    return JSON.parse(json);
+    return JSON.parse(json) as T;
   } catch (e) {
-    return {};
+    return fallback as T;
   }
 };
 

@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-const db = new PrismaClient();
+import db from '../lib/db';
 
 import categories from '../mocks/categories';
 import products from '../mocks/products';

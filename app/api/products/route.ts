@@ -1,25 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import db from 'lib/db';
-import { safeJsonParse } from 'lib/utils/utils';
+import { parseToProducts } from 'lib/utils/db-utils';
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
-  const { searchParams } = new URL(request.url);
-  const params = Object.fromEntries(searchParams.entries());
+export async function GET(): Promise<NextResponse> {
+  const dbProducts = await db.product.findMany();
 
-  const _products = await db.product.findMany();
-
-  if (_products.length === 0) {
-    return NextResponse.json({ message: 'No products found', params }, { status: 404 });
+  if (dbProducts.length === 0) {
+    return NextResponse.json({ message: 'No products found' }, { status: 404 });
   }
 
-  const products = _products.map(({ productOptions, productVariants, ...product }) => ({
-    ...product,
-    productOptions: safeJsonParse(productOptions),
-    productVariants: safeJsonParse(productVariants)
-  }));
+  const products = parseToProducts(dbProducts);
 
-  return NextResponse.json({ params, products });
+  return NextResponse.json({ products });
 }
 
 export const dynamic = 'force-dynamic';

@@ -4,6 +4,7 @@ export type Product = {
   title: string;
   description: string;
   price: Money;
+  pricing?: Money[];
   stock: number;
   image: Image;
   images: Image[];
@@ -61,6 +62,7 @@ export type Image = {
 export type Money = {
   amount: string;
   currency: string;
+  currencyType?: string;
 };
 
 export type Cart = {

@@ -44,6 +44,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  uuidv7:
+    specifier: ^1.0.1
+    version: 1.0.1
 
 devDependencies:
   '@tailwindcss/container-queries':
@@ -1817,6 +1820,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.7
+      napi-wasm: 1.1.0
     dev: false
     bundledDependencies:
       - napi-wasm
@@ -8003,6 +8007,10 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: false
+
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -9182,7 +9190,7 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
     dependencies:
-      glob: 7.2.0
+      glob: 7.2.3
     dev: false
 
   /rimraf@3.0.2:
@@ -10271,6 +10279,11 @@ packages:
 
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    dev: false
+
+  /uuidv7@1.0.1:
+    resolution: {integrity: sha512-2noB909GbI352dKfASOY6VHHl59KvevZ1FF8gCAXCwDyrt2kkZhuFbczF9udqTfeejiRYEmO4wzUZ0WhVP+IUA==}
     hasBin: true
     dev: false
 
