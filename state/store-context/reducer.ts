@@ -79,5 +79,6 @@ export const StoreReducer: Reducer<StoreState, StoreAction> = (state, action) =>
     case 'CLEAR_CART':
       return { ...state, cartItems: [] };
     default:
+      return state;
   }
 };
