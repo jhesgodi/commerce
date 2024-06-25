@@ -167,9 +167,7 @@ export class SimpleSalesService extends DataService {
 
       result = products.sort((a, b) => {
         const aValue = getSortValue(a) || 0;
-        console.log('🐛 ~ aValue:', aValue);
         const bValue = getSortValue(b) || 0;
-        console.log('🐛 ~ bValue:', bValue);
 
         let returnValue = 0;
         if (aValue < bValue) {
@@ -186,7 +184,6 @@ export class SimpleSalesService extends DataService {
   }
 
   async getSimilarProducts(productId: string): Promise<Product[]> {
-    console.log('🐛 ~ productId:', productId);
     return this.getProducts({ first: 3 });
   }
 }
