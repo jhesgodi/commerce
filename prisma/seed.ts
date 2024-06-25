@@ -1,14 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import db from '../lib/db';
 
 import categories from '../mocks/categories';
 import products from '../mocks/products';
 
 const seedProducts = async () => {
-  // const categories = await prisma.category.findMany();
-
   for (const product of products) {
-    const createdProduct = await prisma.product.upsert({
+    const createdProduct = await db.product.upsert({
       where: { id: product.id },
       update: {},
       create: {
@@ -28,7 +25,7 @@ const seedProducts = async () => {
 
 const seedCategories = async () => {
   for (const category of categories) {
-    const createdCategory = await prisma.category.upsert({
+    const createdCategory = await db.category.upsert({
       where: { slug: category.slug },
       update: {},
       create: {
@@ -44,7 +41,7 @@ const seedCategories = async () => {
 
     // Connect products to the category
     for (const productId of category.productIds) {
-      await prisma.categoriesOnProducts.upsert({
+      await db.categoriesOnProducts.upsert({
         where: {
           categoryId_productId: { categoryId: createdCategory.id, productId: productId }
         },
@@ -66,10 +63,10 @@ async function main() {
 
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await db.$disconnect();
   })
   .catch(async (e) => {
     console.error(e);
-    await prisma.$disconnect();
+    await db.$disconnect();
     process.exit(1);
   });

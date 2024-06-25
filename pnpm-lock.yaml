@@ -1817,7 +1817,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.7
-      napi-wasm: 1.1.0
     dev: false
     bundledDependencies:
       - napi-wasm
@@ -6711,7 +6710,7 @@ packages:
       keccak: 3.0.4
       lodash: 4.17.21
       mnemonist: 0.38.5
-      mocha: 10.5.0
+      mocha: 10.5.1
       p-map: 4.0.0
       raw-body: 2.5.2
       resolve: 1.17.0
@@ -7934,8 +7933,8 @@ packages:
       obliterator: 2.0.4
     dev: false
 
-  /mocha@10.5.0:
-    resolution: {integrity: sha512-KoCXMKfW2OMsvCbaJJFPdzg36lI9+tMH7yyXCoKh6PpFo7BAC/xqG7Ct/aitJDrGbIGcN2IT3cx3bZ6PDGaXmA==}
+  /mocha@10.5.1:
+    resolution: {integrity: sha512-eq5tEnaz2kM9ade8cuGJBMh5fBb9Ih/TB+ddlmPR+wLQmwLhUwa0ovqDlg7OTfKquW0BI7NUcNWX7DH8sC+3gw==}
     engines: {node: '>= 14.0.0'}
     hasBin: true
     dependencies:
@@ -8003,10 +8002,6 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
-    dev: false
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -9187,7 +9182,7 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
     dependencies:
-      glob: 7.2.3
+      glob: 7.2.0
     dev: false
 
   /rimraf@3.0.2:
