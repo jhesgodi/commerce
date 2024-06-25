@@ -33,7 +33,10 @@ export const useCheckoutItems = () => {
       return;
     }
 
-    const items: ImtblCheckout.SaleItem[] = cartItems.map(({ product, ...rest }) => rest);
+    const items: ImtblCheckout.SaleItem[] = cartItems.map(({ product, ...rest }) => ({
+      ...rest,
+      productId: product.id
+    }));
     const multiItemCart = items.length > 1;
 
     // Delay mounting until modal component is rendered

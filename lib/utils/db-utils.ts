@@ -1,8 +1,15 @@
 import { uuidv7 } from 'uuidv7';
 
 import db from 'lib/db';
-import { Money, Product } from 'lib/types';
+import { Image, Money, Product } from 'lib/types';
 import { safeJsonParse } from './utils';
+
+const parseToImage = (url: string, altText: string): Image => ({
+  url,
+  altText,
+  height: 100,
+  width: 100
+});
 
 export const parseToProducts = <T extends Record<string, any>>(products: T[]): Product[] => {
   return products.map<Product>((product) => ({
@@ -11,16 +18,11 @@ export const parseToProducts = <T extends Record<string, any>>(products: T[]): P
     title: product.name,
     description: product.description,
     stock: product.stock,
-    descriptionHtml: `<p>product.description</p>`,
+    descriptionHtml: `<p>${product.description}</p>`,
     inStock: true,
     price: safeJsonParse(product.price, { amount: '0', currency: 'USD' }),
-    image: {
-      url: product.image,
-      altText: product.name,
-      height: 100,
-      width: 100
-    },
-    images: [],
+    image: parseToImage(product.image, product.name),
+    images: [parseToImage(product.image, product.name)],
     seo: {
       title: product.name,
       description: product.description
@@ -34,10 +36,12 @@ export const parseToProducts = <T extends Record<string, any>>(products: T[]): P
 };
 
 export const getTokenId = (id: string): string => {
+  // ERC1155 uses the same id
   if (process.env.NFT_COLLECTION_TYPE === 'ERC1155') {
     return id;
   }
 
+  // ERC721 uses unique ids
   return BigInt(`0x${uuidv7().replace(/-/g, '')}`).toString();
 };
 
@@ -61,17 +65,17 @@ export type ReqProduct = {
 };
 
 export const checkProducts = async (
-  quoteProducts: ReqProduct[]
+  reqProduct: ReqProduct[]
 ): Promise<[string, undefined] | [undefined, Product[]]> => {
   const dbProducts = await db.product.findMany({
     where: {
       id: {
-        in: quoteProducts.map(({ product_id }) => product_id)
+        in: reqProduct.map(({ product_id }) => product_id)
       }
     }
   });
 
-  for (const quoteProduct of quoteProducts) {
+  for (const quoteProduct of reqProduct) {
     const product = dbProducts.find(({ id }) => id === quoteProduct.product_id);
 
     if (!product) {

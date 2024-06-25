@@ -2,21 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { Money } from 'lib/types';
 import {
-  CRYPTO_CURRENCIES,
-  ReqCurrency,
   ReqPricing,
   ReqProduct,
   checkProducts,
   fetchConversions,
   getPrices
 } from 'lib/utils/db-utils';
-import { safeJsonParse } from 'lib/utils/utils';
+
+type QuoteParams = {
+  recipient_address: string;
+  products: ReqProduct[];
+};
 
 type QuoteResponse = {
-  config: {
-    contract_id: string;
-  };
-  currencies: ReqCurrency[];
   products: {
     product_id: string;
     quantity: number;
@@ -25,10 +23,13 @@ type QuoteResponse = {
   totals: ReqPricing[];
 };
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
-  const { searchParams } = new URL(request.url);
+export async function POST(request: NextRequest): Promise<NextResponse> {
+  const { products: quoteProducts }: QuoteParams = await request.json();
 
-  const quoteProducts = safeJsonParse<ReqProduct[]>(atob(searchParams.get('products') ?? ''), []);
+  if (!quoteProducts.length) {
+    return NextResponse.json({ error: 'Invalid request' }, { status: 404 });
+  }
+
   const [error, products] = await checkProducts(quoteProducts);
 
   if (typeof error === 'string') {
@@ -45,10 +46,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     };
 
     const quoteResponse: QuoteResponse = {
-      config: {
-        contract_id: process.env.TRANSAK_CONTRACT_ID ?? ''
-      },
-      currencies: CRYPTO_CURRENCIES,
       products: products.map(({ id, price }) => ({
         product_id: id,
         quantity: quoteProducts.find(({ product_id }) => product_id === id)?.quantity!,
