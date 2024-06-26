@@ -7,7 +7,6 @@ import type { Cart } from 'lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useEffect, useMemo, useRef } from 'react';
-import { SALE_WIDGET_MOUNT_ROOT_ID } from 'state/config/const';
 import { useStore } from 'state/store-context';
 import CloseCart from './close-cart';
 import { DeleteItemButton } from './delete-item-button';
@@ -194,7 +193,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
               {/* Processing Cart */}
               {inProgress && (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
-                  <div id={SALE_WIDGET_MOUNT_ROOT_ID} />
+                  {/* TODO: CHECKOUT UI GOES HERE */}
                 </div>
               )}
             </Dialog.Panel>

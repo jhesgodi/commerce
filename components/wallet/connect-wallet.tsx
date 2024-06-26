@@ -10,14 +10,19 @@ import {
   WalletIcon
 } from '@heroicons/react/24/outline';
 
-import { WIDGETS_MOUNT_ROOT_ID } from 'state/config/const';
-import { useConnectWallet, useWalletBalances } from 'state/hooks';
 import { useStore } from 'state/store-context';
 
 export default function ConnectWallet() {
   const [{ connected, connecting, walletAddress, walletOpen }] = useStore();
-  const { openWallet } = useWalletBalances();
-  const { connectWallet } = useConnectWallet();
+
+  // TODO: Function to connect wallet
+  const connectWallet = () => {
+    console.log('Connecting Wallet');
+  };
+  // TODO: Function to open wallet
+  const openWallet = () => {
+    console.log('Opening Wallet');
+  };
 
   const [Icon, setIcon] = useState<any>(null);
 
@@ -93,7 +98,9 @@ export default function ConnectWallet() {
           {copy}
         </span>
       </button>
-      <span id={WIDGETS_MOUNT_ROOT_ID} className="absolute right-0 top-0 z-10 mt-2.5 pr-4 pt-16" />
+      <div className="absolute right-0 top-0 z-10 mt-2.5 pr-4 pt-16">
+        {/* TODO: CRYPTO WALLET UI GOES HERE */}
+      </div>
     </>
   );
 }

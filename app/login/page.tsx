@@ -1,17 +1,19 @@
 'use client';
 
-import { useEffect } from 'react';
-
-import { useWidgets } from 'state/widgets-context';
+import { useEffect, useMemo } from 'react';
 
 export default function Login() {
-  const [{ passport }] = useWidgets();
+  // TODO:
+  // After login, the call passport.loginCallback() to notify the parent window
+  // and close the popup window
 
   useEffect(() => {
     if (!window.opener) {
       window.location.href = '/';
     }
   }, []);
+
+  const passport = useMemo(() => ({}) as any, []);
 
   useEffect(() => {
     if (!passport) return;
