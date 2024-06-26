@@ -1,5 +1,7 @@
 'use client';
 
+import { StoreProvider } from 'state/store-context';
+
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+  return <StoreProvider>{children}</StoreProvider>;
 }
