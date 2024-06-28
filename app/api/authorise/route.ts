@@ -32,6 +32,7 @@ type AuthoriseResponse = {
   }[];
 };
 
+export const dynamic = 'force-dynamic';
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { currency, products, recipient_address }: AuthoriseParams = await request.json();
 

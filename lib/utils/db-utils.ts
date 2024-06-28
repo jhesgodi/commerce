@@ -13,7 +13,7 @@ const parseToImage = (url: string, altText: string): Image => ({
 
 export const parseToProducts = <T extends Record<string, any>>(products: T[]): Product[] => {
   return products.map<Product>((product) => ({
-    rootId: product.rootId,
+    rootId: product?.rootId,
     id: product.id,
     slug: product.id,
     title: product.name,

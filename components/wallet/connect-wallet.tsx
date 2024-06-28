@@ -52,7 +52,7 @@ export default function ConnectWallet() {
     <>
       <button
         className={clsx(
-          'relative mr-2 flex h-11 w-fit min-w-48 items-center justify-center text-nowrap rounded-md border  px-3 text-black transition-colors dark:text-white',
+          'relative mr-2 flex h-11 w-fit items-center justify-center text-nowrap rounded-md border px-3  text-black transition-colors sm:min-w-48 dark:text-white',
           {
             'dark:border-slate-700': connecting,
             'border-neutral-200 dark:border-neutral-700': !connecting,
@@ -86,7 +86,7 @@ export default function ConnectWallet() {
           />
         )}
         <span
-          className={clsx('ml-2 block', {
+          className={clsx('ml-2 hidden sm:block', {
             'animate-pulse text-slate-300': connecting
           })}
         >

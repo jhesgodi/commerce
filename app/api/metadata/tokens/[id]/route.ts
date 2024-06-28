@@ -16,6 +16,7 @@ type TokenMetadata = {
   attributes?: Record<string, unknown>[];
 } & Record<string, unknown>;
 
+export const dynamic = 'force-dynamic';
 export async function GET(_: NextRequest, { params }: Params): Promise<NextResponse> {
   const { id: tokenId } = params;
 

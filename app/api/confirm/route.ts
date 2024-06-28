@@ -26,6 +26,7 @@ type ConfirmationParams = {
   };
 };
 
+export const dynamic = 'force-dynamic';
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { reference: id }: ConfirmationParams = await request.json();
 

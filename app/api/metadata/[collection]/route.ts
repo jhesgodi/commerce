@@ -12,6 +12,7 @@ type Params = {
   params: { collection: string };
 };
 
+export const dynamic = 'force-dynamic';
 export async function GET(_: NextRequest, { params }: Params): Promise<NextResponse> {
   const { collection: id } = params;
 

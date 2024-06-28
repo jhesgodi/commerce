@@ -20,7 +20,7 @@ function SubmitButton({
   inProgress: boolean;
 }) {
   const buttonClasses =
-    'relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white mx-4';
+    'relative flex mb-4 xl:mb-0 xl:mr-4 items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white';
   const disabledClasses = 'cursor-not-allowed opacity-60 hover:opacity-60';
 
   if (!availableForSale) {
@@ -31,13 +31,13 @@ function SubmitButton({
     );
   }
 
-  if (!selectedVariantId) {
+  if (!selectedVariantId && selectedVariantId !== '<unknown>') {
     return (
       <button
         aria-label="Please select an option"
         aria-disabled
         disabled
-        className={clsx(buttonClasses, disabledClasses)}
+        className={clsx(buttonClasses, disabledClasses, 'w-full')}
       >
         Please select an option
       </button>
@@ -45,7 +45,7 @@ function SubmitButton({
   }
 
   return (
-    <div className="row flex">
+    <div className="row flex flex-col justify-start xl:flex-row">
       <button
         aria-label="Add to cart"
         aria-disabled={inProgress}
@@ -59,14 +59,14 @@ function SubmitButton({
           addToCart(true);
         }}
       >
-        <div className="absolute left-0 ml-4">
+        <div className="mx-2 block">
           {inProgress ? (
             <LoadingDots className="mb-3 bg-white" />
           ) : (
             <ArrowRightCircleIcon className="h-5" />
           )}
         </div>
-        1-Click Buy
+        One Click Buy
       </button>
       <button
         onClick={(e: React.FormEvent<HTMLButtonElement>) => {
@@ -82,7 +82,7 @@ function SubmitButton({
           [disabledClasses]: inProgress
         })}
       >
-        <div className="absolute left-0 ml-4">
+        <div className="mx-2 block">
           {inProgress ? <LoadingDots className="mb-3 bg-white" /> : <PlusIcon className="h-5" />}
         </div>
         Add To Cart
@@ -103,14 +103,14 @@ export function AddToCart({ product }: { product: Product }) {
             (option) => option.value === searchParams.get(option.name.toLowerCase())
           )
         );
-  const variantId = variant?.id;
+  const variantId = product.variants.length > 0 ? variant?.id : '<unknown>';
 
   return (
     <SubmitButton
       inProgress={inProgress}
       availableForSale={product.inStock}
       selectedVariantId={variantId}
-      addToCart={(buyNow: boolean) => product && variant && addToCart(product, variant, buyNow)}
+      addToCart={(buyNow: boolean) => product && addToCart(product, variant, buyNow)}
     />
   );
 }

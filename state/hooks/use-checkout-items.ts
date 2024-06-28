@@ -33,10 +33,7 @@ export const useCheckoutItems = () => {
       return;
     }
 
-    const items: ImtblCheckout.SaleItem[] = cartItems.map(({ product, ...rest }) => ({
-      ...rest,
-      productId: product.id
-    }));
+    const items: ImtblCheckout.SaleItem[] = cartItems.map(({ product, ...rest }) => rest);
     const multiItemCart = items.length > 1;
 
     // Delay mounting until modal component is rendered
@@ -54,14 +51,24 @@ export const useCheckoutItems = () => {
     }, 500);
   }, [cartItems, inProgress, saleWidget]);
 
-  const addToCart = (product: Product, variant: ProductVariant, buyNow = false) => {
+  const addToCart = (product: Product, variant?: ProductVariant, buyNow = false) => {
+    const name = variant ? variant.title : product.title;
+    const productId = variant ? variant.id : product.id;
+
+    if (buyNow) {
+      storeDispatch({ payload: { type: 'CLEAR_CART' } });
+      storeDispatch({
+        payload: { type: 'SET_CART_PROCESSING', processing: true }
+      });
+    }
+
     storeDispatch({
       payload: {
         type: 'ADD_ITEM_TO_CART',
         item: {
           qty: 1,
-          name: variant.title,
-          productId: variant.id,
+          name,
+          productId,
           description: product.description,
           image: product.image.url,
           product
@@ -71,12 +78,6 @@ export const useCheckoutItems = () => {
     storeDispatch({
       payload: { type: 'SET_TOGGLE_CART_OPEN', open: true }
     });
-
-    if (buyNow) {
-      storeDispatch({
-        payload: { type: 'SET_CART_PROCESSING', processing: true }
-      });
-    }
   };
 
   return {

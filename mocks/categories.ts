@@ -15,7 +15,7 @@ const categories: Category[] = [
     path: '/search/carousel',
     title: 'Carousel',
     description: 'Carousel products',
-    productIds: ['1', '2', '3'],
+    productIds: ['4', '5', '6'],
     updatedAt: '2021-01-01T00:00:00Z',
     createdAt: '2021-01-01T00:00:00Z'
   },

@@ -2,6 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import Price from 'components/price';
 import type { Cart } from 'lib/types';
 import Image from 'next/image';
@@ -83,8 +84,20 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl md:w-[480px] dark:border-neutral-700 dark:bg-black/80 dark:text-white">
-              <div className="flex items-center justify-between">
+            <Dialog.Panel
+              className={clsx(
+                'fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl  md:w-[480px] dark:border-neutral-700 dark:bg-black/80 dark:text-white',
+                {
+                  'p-0 sm:p-6': inProgress,
+                  'p-6': !inProgress
+                }
+              )}
+            >
+              <div
+                className={clsx('flex items-center justify-between px-2 sm:px-0', {
+                  'hidden sm:flex': inProgress
+                })}
+              >
                 <p className="text-lg font-semibold">
                   {inProgress ? 'Processing Cart' : 'Your Cart'}
                 </p>
@@ -193,7 +206,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
 
               {/* Processing Cart */}
               {inProgress && (
-                <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
+                <div className="flex w-full flex-col items-center justify-center overflow-hidden sm:mt-20">
                   <div id={SALE_WIDGET_MOUNT_ROOT_ID} />
                 </div>
               )}

@@ -17,7 +17,11 @@ module.exports = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [{ hostname: 'via.placeholder.com' }, { hostname: 'immutable.github.io' }]
+    remotePatterns: [
+      { hostname: 'via.placeholder.com' },
+      { hostname: 'immutable.github.io' },
+      { hostname: 'www.countryflags.com' }
+    ]
   },
   async redirects() {
     return [

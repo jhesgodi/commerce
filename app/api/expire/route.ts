@@ -6,6 +6,7 @@ type ExpirationParams = {
   reference: string;
 };
 
+export const dynamic = 'force-dynamic';
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { reference: id }: ExpirationParams = await request.json();
 

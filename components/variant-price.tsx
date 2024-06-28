@@ -36,7 +36,13 @@ const VariantPrice = ({
         amount: variant.price.amount,
         currencyCode: variant.price.currency
       });
+      return;
     }
+
+    setDetails({
+      amount: product.price.amount,
+      currencyCode: product.price.currency
+    });
   }, [searchParams, product]);
 
   const { amount, currencyCode } = details;
