@@ -1,7 +1,7 @@
 import { uuidv7 } from 'uuidv7';
 
 import db from 'lib/db';
-import { Image, Money, Product } from 'lib/types';
+import { Image, Money, Product, ProductVariant } from 'lib/types';
 import { safeJsonParse } from './utils';
 
 const parseToImage = (url: string, altText: string): Image => ({
@@ -13,6 +13,7 @@ const parseToImage = (url: string, altText: string): Image => ({
 
 export const parseToProducts = <T extends Record<string, any>>(products: T[]): Product[] => {
   return products.map<Product>((product) => ({
+    rootId: product.rootId,
     id: product.id,
     slug: product.id,
     title: product.name,
@@ -31,13 +32,19 @@ export const parseToProducts = <T extends Record<string, any>>(products: T[]): P
     options: safeJsonParse(product.productOptions, []),
     variants: safeJsonParse(product.productVariants, []),
     createdAt: product.createdAt.toDateString(),
-    updatedAt: product.updatedAt.toDateString()
+    updatedAt: product.updatedAt.toDateString(),
+
+    nftCollection: {
+      id: product.NFTCollection.id,
+      type: product.NFTCollection.contractType,
+      address: product.NFTCollection.contractAddress
+    }
   }));
 };
 
-export const getTokenId = (id: string): string => {
+export const getTokenId = (id: string, collectionType: string = ''): string => {
   // ERC1155 uses the same id
-  if (process.env.NFT_COLLECTION_TYPE === 'ERC1155') {
+  if (collectionType === 'ERC1155') {
     return id;
   }
 
@@ -65,32 +72,52 @@ export type ReqProduct = {
 };
 
 export const checkProducts = async (
-  reqProduct: ReqProduct[]
+  reqProducts: ReqProduct[]
 ): Promise<[string, undefined] | [undefined, Product[]]> => {
+  const ids = reqProducts.map(({ product_id }) => product_id);
   const dbProducts = await db.product.findMany({
     where: {
-      id: {
-        in: reqProduct.map(({ product_id }) => product_id)
-      }
-    }
+      OR: [{ id: { in: ids } }, ...ids.map((id) => ({ productVariants: { contains: id } }))]
+    },
+    include: { NFTCollection: true }
   });
 
-  for (const quoteProduct of reqProduct) {
-    const product = dbProducts.find(({ id }) => id === quoteProduct.product_id);
+  const products = [];
 
-    if (!product) {
+  for (const quoteProduct of reqProducts) {
+    const dbProduct = dbProducts.find(({ id, productVariants }) => {
+      if (isNaN(Number(quoteProduct.product_id))) {
+        return productVariants.includes(id);
+      }
+
+      return id === quoteProduct.product_id;
+    });
+
+    if (!dbProduct) {
       return [`Product ${quoteProduct.product_id} not found.`, undefined];
     }
 
-    if (product.stock < quoteProduct.quantity) {
+    if (dbProduct.stock < quoteProduct.quantity) {
       return [
-        `Product ${quoteProduct.product_id} has not enough stock. ${quoteProduct.quantity}/${product.stock}`,
+        `Product ${quoteProduct.product_id} has not enough stock. ${quoteProduct.quantity}/${dbProduct.stock}`,
         undefined
       ];
     }
+
+    const product = { ...dbProduct, rootId: dbProduct.id };
+
+    if (dbProduct.productVariants.includes(quoteProduct.product_id)) {
+      const variants = safeJsonParse<ProductVariant[]>(dbProduct.productVariants, []);
+      const variant = variants.find(({ id }) => id === quoteProduct.product_id)!;
+
+      product.id = variant.id;
+      product.price = JSON.stringify(variant.price);
+    }
+
+    products.push(product);
   }
 
-  return [, parseToProducts(dbProducts)];
+  return [, parseToProducts(products)];
 };
 
 const FIAT_CURRENCIES = 'usd';

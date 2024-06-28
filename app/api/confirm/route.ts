@@ -1,4 +1,5 @@
 import db from 'lib/db';
+import { safeJsonParse } from 'lib/utils/utils';
 import { NextRequest, NextResponse } from 'next/server';
 
 type ConfirmationParams = {
@@ -32,16 +33,36 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
   }
 
+  const order = await db.order.findUnique({
+    where: { id, AND: { status: 'pending' } },
+    include: { orderProduct: true }
+  });
+
+  if (!order) {
+    return NextResponse.json({ message: `Order ${id} not found` }, { status: 404 });
+  }
+
   try {
-    await db.order.update({
+    const tokenStatusUpdateTxns = order.orderProduct.map((orderProduct) => {
+      const tokenIds = safeJsonParse<string[]>(orderProduct.tokenIds!, []);
+      return db.tokens.updateMany({
+        where: { tokenId: { in: tokenIds }, AND: { status: 'pending' } },
+        data: { status: 'minted' }
+      });
+    });
+
+    const orderUpdateTxn = db.order.update({
       where: { id },
       data: {
         status: 'confirmed'
       }
     });
+
+    await db.$transaction([orderUpdateTxn, ...tokenStatusUpdateTxns]);
   } catch (error) {
+    console.log('🐛 ~ /api/confirm:', error);
     return NextResponse.json({ error, message: `Error updating order ${id}` }, { status: 500 });
   }
 
-  return NextResponse.json({}, { status: 200 });
+  return NextResponse.json({ message: `Order ${id} confirmed successfully` }, { status: 200 });
 }

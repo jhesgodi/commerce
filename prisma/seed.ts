@@ -67,10 +67,11 @@ const seedNFTCollections = async () => {
       create: {
         id: nftCollection.id,
         name: nftCollection.name,
+        image: nftCollection.image,
         description: nftCollection.description,
         contractAddress: nftCollection.contractAddress,
+        contractType: nftCollection.contractType,
         externalLink: '',
-        image: nftCollection.image,
         products: {
           connect: nftCollection.productIds.map((id) => ({ id }))
         }

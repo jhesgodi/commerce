@@ -12,7 +12,7 @@ type Params = {
   params: { collection: string };
 };
 
-export async function GET(request: NextRequest, { params }: Params): Promise<NextResponse> {
+export async function GET(_: NextRequest, { params }: Params): Promise<NextResponse> {
   const { collection: id } = params;
 
   if (!id) {

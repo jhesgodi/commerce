@@ -19,6 +19,13 @@ export type Product = {
   descriptionHtml: string;
   createdAt: string;
   updatedAt: string;
+
+  nftCollection?: {
+    id: string;
+    type: 'ERC1155' | 'ERC721';
+    address: string;
+  };
+  rootId?: string;
 };
 
 export type ProductOption = {

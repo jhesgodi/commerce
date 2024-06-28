@@ -63,7 +63,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json(quoteResponse);
   } catch (error) {
-    console.error('Unexpected error', error);
+    console.log('🐛 ~ /api/quote:', error);
     return NextResponse.json({ error: 'Unexpected error' }, { status: 500 });
   }
 }

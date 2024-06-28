@@ -18,6 +18,8 @@
     "db:create": "npx prisma db push",
     "db:deploy": "npx prisma migrate deploy",
     "db:seed": "npx prisma db seed",
+    "db:reset": "npx prisma migrate reset",
+    "db:recreate": "pnpm db:reset && pnpm db:create && pnpm db:seed",
     "db:explorer": "npx prisma studio",
     "db:setup": "pnpm db:generate && pnpm db:create && pnpm db:seed",
     "vercel-build": "pnpm db:setup && pnpm build"

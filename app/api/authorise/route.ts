@@ -55,7 +55,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const tokenIds: Record<string, string[]> = products.reduce(
     (acc, { product_id, quantity }) => ({
       ...acc,
-      [product_id]: Array.from({ length: quantity }, () => getTokenId(product_id))
+      [product_id]: Array.from({ length: quantity }, () => {
+        const product = dbProducts.find(({ id }) => id === product_id)!;
+        return getTokenId(product_id, product.nftCollection?.type);
+      })
     }),
     {}
   );
@@ -81,7 +84,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const updateQtyTxns = products.map(({ product_id, quantity }) =>
       db.product.update({
-        where: { id: product_id },
+        where: { id: dbProducts.find(({ id }) => id === product_id)!.rootId },
         data: { stock: { decrement: quantity } }
       })
     );
@@ -96,13 +99,53 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             unitPrice: productsPricing[product_id]!.amount.toString(),
             tokenIds: JSON.stringify(tokenIds[product_id]!),
             quantity,
-            product: { connect: { id: dbProducts.find(({ id }) => id === product_id)!.id } }
+            product: {
+              connect: {
+                id: dbProducts.find(({ id }) => id === product_id)!.rootId
+              }
+            }
           }))
         }
       }
     });
 
-    const [createdOrder] = await db.$transaction([createOrderTxn, ...updateQtyTxns]);
+    const createTokensTxn = Object.entries(tokenIds)
+      .map(([productId, reservedTokenIds]) =>
+        reservedTokenIds.map((reservedTokenId) => {
+          const dbProduct = dbProducts.find(({ id }) => id === productId)!;
+          const attributes =
+            dbProduct.variants.find(({ id }) => id === productId)?.selectedOptions || [];
+
+          return db.tokens.upsert({
+            where: {
+              tokenId: reservedTokenId
+            },
+            update: {
+              name: dbProduct.title,
+              image: dbProduct.image.url,
+              attributes: JSON.stringify(attributes),
+              description: dbProduct.description,
+              nftCollectionId: dbProduct.nftCollection?.id
+            },
+            create: {
+              tokenId: reservedTokenId,
+              name: dbProduct.title,
+              image: dbProduct.image.url,
+              attributes: JSON.stringify(attributes),
+              description: dbProduct.description,
+              externalLink: '',
+              nftCollectionId: dbProduct.nftCollection?.id
+            }
+          });
+        })
+      )
+      .flat();
+
+    const [createdOrder] = await db.$transaction([
+      createOrderTxn,
+      ...updateQtyTxns,
+      ...createTokensTxn
+    ]);
 
     const response: AuthoriseResponse = {
       reference: createdOrder.id,
@@ -111,10 +154,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         const dbProduct = dbProducts.find(({ id }) => id === product_id)!;
         return {
           product_id,
-          collection_address: process.env.NFT_COLLECTION_ADDRESS!,
-          contract_type: process.env.NFT_COLLECTION_TYPE!,
+          collection_address: dbProduct.nftCollection?.address!,
+          contract_type: dbProduct.nftCollection?.type!,
           detail: Array.from({ length: quantity }, (_, i) => ({
             token_id: tokenIds[product_id]?.[i]!,
+
             amount: findPriceByCurrency(dbProduct.price, currency, conversionRates).amount
           }))
         };
@@ -123,6 +167,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json(response);
   } catch (error) {
+    console.log('🐛 ~ /api/authorise:', error);
     return NextResponse.json({ error, message: 'Error creating order' }, { status: 500 });
   }
 }

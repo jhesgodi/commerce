@@ -9,15 +9,15 @@ type Params = {
 type TokenMetadata = {
   id: number;
   image: string;
-  token_id: number;
+  token_id: string;
   name: string;
   description: string;
   external_url: string;
   attributes?: Record<string, unknown>[];
 } & Record<string, unknown>;
 
-export async function GET(request: NextRequest, { params }: Params): Promise<NextResponse> {
-  const tokenId = Number(params.id);
+export async function GET(_: NextRequest, { params }: Params): Promise<NextResponse> {
+  const { id: tokenId } = params;
 
   const token = await db.tokens.findFirst({ where: { tokenId } });
 

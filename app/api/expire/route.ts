@@ -1,4 +1,5 @@
 import db from 'lib/db';
+import { safeJsonParse } from 'lib/utils/utils';
 import { NextRequest, NextResponse } from 'next/server';
 
 type ExpirationParams = {
@@ -13,7 +14,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const dbOrder = await db.order.findUnique({
-    where: { id },
+    where: { id, AND: { status: 'pending' } },
     include: {
       orderProduct: {
         include: {
@@ -63,7 +64,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
     });
 
-    const [expiredOrder] = await db.$transaction([expireOrderTxn, ...restoreQtyTxns]);
+    const removeTokensTxns = dbOrder.orderProduct.map((orderProduct) => {
+      const tokenIds = safeJsonParse<string[]>(orderProduct.tokenIds!, []);
+      return db.tokens.deleteMany({
+        where: { tokenId: { in: tokenIds }, AND: { status: 'reserved' } }
+      });
+    });
+
+    const [expiredOrder] = await db.$transaction([
+      expireOrderTxn,
+      ...restoreQtyTxns,
+      ...removeTokensTxns
+    ]);
 
     if (expiredOrder.status !== 'expired') {
       return NextResponse.json({ error: 'Error expiring order' }, { status: 500 });
@@ -77,6 +89,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       { status: 200 }
     );
   } catch (error) {
+    console.log('🐛 ~ /api/expire:', error);
     return NextResponse.json({ error, message: `Error updating order ${id}` }, { status: 500 });
   }
 }
