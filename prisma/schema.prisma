@@ -26,6 +26,9 @@ model Product {
   categories      CategoriesOnProducts[]
   orderProduct    OrderProduct[]
 
+  NFTCollection   NFTCollection? @relation(fields: [nftCollectionId], references: [id])
+  nftCollectionId String?
+
   @@index(id)
 }
 
@@ -57,6 +60,8 @@ model Order {
   createdAt    DateTime       @default(now()) @map("created_at")
   updatedAt    DateTime       @default(now()) @map("updated_at")
   orderProduct OrderProduct[]
+
+  @@index(id)
 }
 
 model OrderProduct {
@@ -68,4 +73,37 @@ model OrderProduct {
   product   Product @relation(fields: [productId], references: [id])
   orderId   String  @map("order_id")
   order     Order   @relation(fields: [orderId], references: [id])
+}
+
+model NFTCollection {
+  id              String   @id @default(cuid())
+  name            String   @unique
+  description     String
+  image           String
+  externalLink    String   @map("external_link")
+  contractAddress String   @unique
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @default(now()) @map("updated_at")
+
+  tokens   Tokens[]
+  products Product[]
+
+  @@index([id, contractAddress])
+}
+
+model Tokens {
+  id           Int      @id @default(autoincrement())
+  image        String
+  tokenId      Int      @unique @map("token_id")
+  name         String
+  description  String
+  attributes   String
+  externalLink String   @map("external_link")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @map("updated_at")
+
+  NFTCollection   NFTCollection? @relation(fields: [nftCollectionId], references: [id])
+  nftCollectionId String?
+
+  @@index([id, tokenId])
 }

@@ -248,6 +248,93 @@ const products: Product[] = [
     ],
     updatedAt: '1719186914515',
     createdAt: '1719186914510'
+  },
+  {
+    id: '4',
+    slug: 'flag-colombia',
+    title: 'Colombia',
+    description: 'Flag of Colombia',
+    descriptionHtml: '<p>Flag of Colombia</p>',
+    image: {
+      url: 'https://www.countryflags.com/wp-content/uploads/colombia-flag-png-large.png',
+      altText: 'Flag of Colombia - default image',
+      width: 1000,
+      height: 667
+    },
+    images: [],
+    stock: 1000,
+    inStock: true,
+    options: [],
+    price: {
+      amount: '1',
+      currency: 'USD'
+    },
+    seo: {
+      title: 'Flag of Colombia',
+      description: 'Flag of Colombia'
+    },
+    tags: [],
+    variants: [],
+    updatedAt: '1719186914540',
+    createdAt: '1719186914530'
+  },
+  {
+    id: '5',
+    slug: 'flag-brazil',
+    title: 'Brazil',
+    description: 'Flag of Brazil',
+    descriptionHtml: '<p>Flag of Brazil</p>',
+    image: {
+      url: 'https://www.countryflags.com/wp-content/uploads/brazil-flag-png-large.png',
+      altText: 'Flag of Brazil - default image',
+      width: 1000,
+      height: 667
+    },
+    images: [],
+    stock: 1000,
+    inStock: true,
+    options: [],
+    price: {
+      amount: '1',
+      currency: 'USD'
+    },
+    seo: {
+      title: 'Flag of Brazil',
+      description: 'Flag of Brazil'
+    },
+    tags: [],
+    variants: [],
+    updatedAt: '1719186914540',
+    createdAt: '1719186914530'
+  },
+  {
+    id: '6',
+    slug: 'flag-korea',
+    title: 'Korea',
+    description: 'Flag of Korea',
+    descriptionHtml: '<p>Flag of Korea</p>',
+    image: {
+      url: 'https://www.countryflags.com/wp-content/uploads/south-korea-flag-png-large.png',
+      altText: 'Flag of Korea - default image',
+      width: 1000,
+      height: 667
+    },
+    images: [],
+    stock: 1000,
+    inStock: true,
+    options: [],
+    price: {
+      amount: '1',
+      currency: 'USD'
+    },
+    seo: {
+      title: 'Flag of Korea',
+      description: 'Flag of Korea'
+    },
+    tags: [],
+    variants: [],
+    updatedAt: '1719186914540',
+    createdAt: '1719186914530'
   }
 ];
 

@@ -1,6 +1,7 @@
 import db from '../lib/db';
 
 import categories from '../mocks/categories';
+import nftCollections from '../mocks/nft-collections';
 import products from '../mocks/products';
 
 const seedProducts = async () => {
@@ -56,9 +57,34 @@ const seedCategories = async () => {
   }
 };
 
+const seedNFTCollections = async () => {
+  for (const nftCollection of nftCollections) {
+    const createdNFTCollection = await db.nFTCollection.upsert({
+      where: {
+        id: nftCollection.id
+      },
+      update: {},
+      create: {
+        id: nftCollection.id,
+        name: nftCollection.name,
+        description: nftCollection.description,
+        contractAddress: nftCollection.contractAddress,
+        externalLink: '',
+        image: nftCollection.image,
+        products: {
+          connect: nftCollection.productIds.map((id) => ({ id }))
+        }
+      }
+    });
+
+    console.log(`Created NFT Collection with id: ${createdNFTCollection.id}`);
+  }
+};
+
 async function main() {
   await seedProducts();
   await seedCategories();
+  await seedNFTCollections();
 }
 
 main()

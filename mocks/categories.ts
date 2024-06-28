@@ -18,6 +18,24 @@ const categories: Category[] = [
     productIds: ['1', '2', '3'],
     updatedAt: '2021-01-01T00:00:00Z',
     createdAt: '2021-01-01T00:00:00Z'
+  },
+  {
+    slug: 'erc1155',
+    path: '/search/erc1155',
+    title: 'ERC1155',
+    description: 'ERC1155 products',
+    productIds: ['1', '2', '3'],
+    updatedAt: '2021-01-01T00:00:00Z',
+    createdAt: '2021-01-01T00:00:00Z'
+  },
+  {
+    slug: 'erc721',
+    path: '/search/erc721',
+    title: 'ERC721',
+    description: 'ERC721 products',
+    productIds: ['4', '5', '6'],
+    updatedAt: '2021-01-01T00:00:00Z',
+    createdAt: '2021-01-01T00:00:00Z'
   }
 ];
 
