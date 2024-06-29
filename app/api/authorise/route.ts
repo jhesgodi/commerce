@@ -49,7 +49,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   let conversionRates: ConversionRates = {};
   try {
     conversionRates = await fetchConversions();
-  } catch {
+  } catch (error) {
+    console.log('🐛 ~ /api/authorise:', error);
     return NextResponse.json({ error: 'Error fetching conversion rates' }, { status: 500 });
   }
 

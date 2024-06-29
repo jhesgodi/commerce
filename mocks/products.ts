@@ -1,7 +1,7 @@
 import { Product } from 'lib/types';
 const products: Product[] = [
   {
-    id: '1',
+    id: 'P010',
     slug: 'pink-blob',
     title: 'Pink Blob',
     description: 'A three-dimensional pink blob.',
@@ -40,7 +40,7 @@ const products: Product[] = [
     tags: [],
     variants: [
       {
-        id: 'pink-blob-common',
+        id: 'P011',
         title: 'Pink Blob - Common',
         availableForSale: true,
         selectedOptions: [
@@ -55,7 +55,7 @@ const products: Product[] = [
         }
       },
       {
-        id: 'pink-blob-rare',
+        id: 'P012',
         title: 'Pink Blob - Rare',
         availableForSale: true,
         selectedOptions: [
@@ -70,7 +70,7 @@ const products: Product[] = [
         }
       },
       {
-        id: 'pink-blob-legendary',
+        id: 'P013',
         title: 'Pink Blob - Legendary',
         availableForSale: true,
         selectedOptions: [
@@ -89,7 +89,7 @@ const products: Product[] = [
     createdAt: '1719186914530'
   },
   {
-    id: '2',
+    id: 'P020',
     slug: 'green-blob',
     title: 'Green Blob',
     description: 'A three-dimensional green blob.',
@@ -128,7 +128,7 @@ const products: Product[] = [
     tags: [],
     variants: [
       {
-        id: 'green-blob-common',
+        id: 'P021',
         title: 'Green Blob - Common',
         availableForSale: true,
         selectedOptions: [
@@ -143,7 +143,7 @@ const products: Product[] = [
         }
       },
       {
-        id: 'green-blob-rare',
+        id: 'P022',
         title: 'Green Blob - Rare',
         availableForSale: true,
         selectedOptions: [
@@ -158,7 +158,7 @@ const products: Product[] = [
         }
       },
       {
-        id: 'green-blob-legendary',
+        id: 'P023',
         title: 'Green Blob - Legendary',
         availableForSale: true,
         selectedOptions: [
@@ -177,7 +177,7 @@ const products: Product[] = [
     createdAt: '1719186914550'
   },
   {
-    id: '3',
+    id: 'P030',
     slug: 'aqua-blob',
     title: 'Aqua Blob',
     description: 'A three-dimensional aqua blob.',
@@ -216,7 +216,7 @@ const products: Product[] = [
     tags: [],
     variants: [
       {
-        id: 'aqua-blob-rare',
+        id: 'P032',
         title: 'Aqua Blob - Rare',
         availableForSale: true,
         selectedOptions: [
@@ -231,7 +231,7 @@ const products: Product[] = [
         }
       },
       {
-        id: 'aqua-blob-legendary',
+        id: 'P033',
         title: 'Aqua Blob - Legendary',
         availableForSale: true,
         selectedOptions: [
@@ -250,7 +250,7 @@ const products: Product[] = [
     createdAt: '1719186914510'
   },
   {
-    id: '4',
+    id: 'P040',
     slug: 'flag-colombia',
     title: 'Colombia',
     description: 'Flag of Colombia',
@@ -279,7 +279,7 @@ const products: Product[] = [
     createdAt: '1719186914530'
   },
   {
-    id: '5',
+    id: 'P050',
     slug: 'flag-brazil',
     title: 'Brazil',
     description: 'Flag of Brazil',
@@ -308,7 +308,7 @@ const products: Product[] = [
     createdAt: '1719186914530'
   },
   {
-    id: '6',
+    id: 'P060',
     slug: 'flag-korea',
     title: 'Korea',
     description: 'Flag of Korea',

@@ -6,7 +6,7 @@ const categories: Category[] = [
     path: '/search/featured',
     title: 'Featured',
     description: 'Featured products',
-    productIds: ['1', '2', '3'],
+    productIds: ['P010', 'P020', 'P030'],
     updatedAt: '2021-01-01T00:00:00Z',
     createdAt: '2021-01-01T00:00:00Z'
   },
@@ -15,7 +15,7 @@ const categories: Category[] = [
     path: '/search/carousel',
     title: 'Carousel',
     description: 'Carousel products',
-    productIds: ['4', '5', '6'],
+    productIds: ['P040', 'P050', 'P060'],
     updatedAt: '2021-01-01T00:00:00Z',
     createdAt: '2021-01-01T00:00:00Z'
   },
@@ -24,7 +24,7 @@ const categories: Category[] = [
     path: '/search/erc1155',
     title: 'ERC1155',
     description: 'ERC1155 products',
-    productIds: ['1', '2', '3'],
+    productIds: ['P010', 'P020', 'P030'],
     updatedAt: '2021-01-01T00:00:00Z',
     createdAt: '2021-01-01T00:00:00Z'
   },
@@ -33,7 +33,7 @@ const categories: Category[] = [
     path: '/search/erc721',
     title: 'ERC721',
     description: 'ERC721 products',
-    productIds: ['4', '5', '6'],
+    productIds: ['P040', 'P050', 'P060'],
     updatedAt: '2021-01-01T00:00:00Z',
     createdAt: '2021-01-01T00:00:00Z'
   }

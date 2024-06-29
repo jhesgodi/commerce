@@ -11,9 +11,17 @@ const parseToImage = (url: string, altText: string): Image => ({
   width: 100
 });
 
+const parseToId = (id: string): string => {
+  if (!isNaN(parseInt(id, 10))) {
+    return id;
+  }
+
+  return parseInt(id.substring(1), 10).toString();
+};
+
 export const parseToProducts = <T extends Record<string, any>>(products: T[]): Product[] => {
   return products.map<Product>((product) => ({
-    rootId: product?.rootId,
+    rootId: product?.rootId || product.id,
     id: product.id,
     slug: product.id,
     title: product.name,
@@ -45,11 +53,11 @@ export const parseToProducts = <T extends Record<string, any>>(products: T[]): P
 export const getTokenId = (id: string, collectionType: string = ''): string => {
   // ERC1155 uses the same id
   if (collectionType === 'ERC1155') {
-    return id;
+    return parseToId(id);
   }
 
   // ERC721 uses unique ids
-  return BigInt(`0x${uuidv7().replace(/-/g, '')}`).toString();
+  return parseToId(BigInt(`0x${uuidv7().replace(/-/g, '')}`).toString());
 };
 
 export type ReqPricing = {
@@ -85,13 +93,10 @@ export const checkProducts = async (
   const products = [];
 
   for (const quoteProduct of reqProducts) {
-    const dbProduct = dbProducts.find(({ id, productVariants }) => {
-      if (isNaN(Number(quoteProduct.product_id))) {
-        return productVariants.includes(id);
-      }
-
-      return id === quoteProduct.product_id;
-    });
+    const dbProduct = dbProducts.find(
+      ({ id, productVariants }) =>
+        productVariants.includes(quoteProduct.product_id) || id === quoteProduct.product_id
+    );
 
     if (!dbProduct) {
       return [`Product ${quoteProduct.product_id} not found.`, undefined];

@@ -47,7 +47,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const tokenStatusUpdateTxns = order.orderProduct.map((orderProduct) => {
       const tokenIds = safeJsonParse<string[]>(orderProduct.tokenIds!, []);
       return db.tokens.updateMany({
-        where: { tokenId: { in: tokenIds }, AND: { status: 'pending' } },
+        where: { tokenId: { in: tokenIds }, AND: { status: 'reserved' } },
         data: { status: 'minted' }
       });
     });
