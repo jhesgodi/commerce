@@ -4,7 +4,7 @@ const nftCollections = [
     name: 'Stickers',
     description: 'A collection of stickers',
     image: 'https://jhesgodi.github.io/stickers-shop-metadata/collection.webp',
-    contractAddress: '0x8f66467cd214ce192b290634181fbd9fd385d144',
+    contractAddress: '0x14113F9c95F002AB11424F913058913E996933DE',
     contractType: 'ERC1155',
     productIds: ['P010', 'P020', 'P030']
   },
