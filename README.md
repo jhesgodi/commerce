@@ -1,5 +1,9 @@
 # NFTs Shop Commerce Template
 
+**Try it out!**
+
+[![Deploy with Vercel](https://vercel.com/button)](https%3A%2F%2Fvercel.com%2Fnew%2Fclone%3Frepository-url%3Dhttps%3A%2F%2Fgithub.com%2Fjhesgodi%2Fcommerce%26env%3DCOMPANY_NAME%2CNEXT_PUBLIC_COLLECTION_NAME%2C%26envDescription%3DFollow%20the%20link%20for%20all%20environment%20variables%26envLink%3Dhttps%3A%2F%2Fgithub.com%2Fjhesgodi%2Fcommerce%2Fblob%2Fmain%2F.env.example%26stores%3D%5B%7B%22type%22%3A%22postgres%22%7D%5D%26project-name%3DMy%20NFTs%20Shop%26repository-name%3Dmy-nfts-shop%26redirect-url%3Dhttps%3A%2F%2Fgithub.com%2Fjhesgodi%2Fcommerce%26demo-title%3DImmutable%20NFTs%20Shop%20Demo%26demo-description%3DAn%20NFT%20primary%20sales%20demo%20shop%26demo-url%3Dhttps%3A%2F%2Fimtbl-commerce.vercel.app%26demo-image%3Dhttps%3A%2F%2Fimmutable.github.io%2Fsample-project-metadata%2Ftokens%2Ftoken1.webp) 
+
 A ecommerce shop template featuring:
 
 - Immutable Checkout Widgets
